@@ -1,0 +1,311 @@
+TasteBud Final Draft
+
+Project Title
+TasteBud: Music Taste Made for Your Earbuds
+
+Project Type
+Offline-First Mobile Audio Player and Music Taste Organizer
+
+Project Description
+TasteBud is an offline-first mobile audio player designed to help users play, organize, and personalize audio files already stored on their device. The app does not provide, download, stream, convert, host, or distribute music. Instead, it focuses on improving the user's local listening experience through playlists, favorites, recently played songs, mood-based organization, taste profiling, automatic thumbnails, and synchronized lyrics.
+
+TasteBud is intended for users who already have audio files on their phones and want a cleaner, smarter, and more personalized way to manage them.
+
+Tagline
+Music Taste Made for Your Earbuds
+
+Core Features
+- Local audio playback
+- Background playback
+- Lock screen controls
+- Playlist creation
+- Favorites
+- Recently played songs
+- Search and filter local songs
+- Mood-based song organization
+- Taste profile quiz
+- Rule-based recommendations from local songs
+- Offline-first music library
+- Embedded album art detection
+- Optional online thumbnail lookup
+- Local thumbnail caching
+- Thumbnail source link and reference display
+- Manual .lrc lyrics import
+- Optional online .lrc lyrics lookup
+- Local lyrics caching
+- Time-synced lyrics display
+- Lyrics source link and reference display
+- Copyright and source disclaimer display
+
+Automatic Thumbnail Feature
+When a song is added, TasteBud will first check if the audio file contains embedded album artwork. If artwork exists, the app will use it as the song thumbnail.
+
+If no embedded artwork is found, the user may optionally allow TasteBud to search online for a suitable thumbnail using the song title, artist, or album metadata. Any retrieved thumbnail will include a source link or reference when available. The thumbnail will be stored only in the app's local cache and will be removed when the app is uninstalled or app data is cleared.
+
+Lyrics Feature
+TasteBud will support synchronized lyrics using .lrc files. Users can add lyrics in two ways:
+
+- Import a .lrc file manually from the device.
+- Search online for a matching .lrc file using the song title, artist, or album metadata.
+
+If lyrics are found, TasteBud will store them locally and display them in sync with the audio playback. The app will also show the source link or reference when available.
+
+Online Resource Policy
+TasteBud's online features are limited to optional metadata resources only.
+
+Online lookup may be used for:
+- song thumbnails
+- album artwork references
+- .lrc lyric files
+- source links and attribution references
+
+TasteBud will not:
+- download songs
+- stream copyrighted music
+- convert YouTube videos to MP3
+- convert videos or online media into audio files
+- host or distribute music
+- upload or publicly share user music files
+- claim ownership of any user audio files
+
+Recommended Tech Stack
+- Mobile App: Flutter
+- Audio Playback: just_audio
+- Background Playback: audio_service
+- State Management: Riverpod or Bloc
+- Local Database: Hive or SQLite
+- Local Storage: app cache and device file access
+- Backend: optional Firebase or Supabase
+- Authentication: optional Firebase Auth or Supabase Auth
+- Cloud Storage: optional, only for user account data or app metadata
+- Recommendation Logic: rule-based recommendation system
+
+Main Modules
+- Music Library Module
+- Music Player Module
+- Playlist Module
+- Favorites Module
+- Recently Played Module
+- Search and Filter Module
+- Taste Profile Module
+- Mood Recommendation Module
+- Thumbnail Management Module
+- Lyrics Management Module
+- Settings Module
+
+Feasibility Reality Check
+
+Highly Feasible
+- Playing local audio files
+- Background playback
+- Lock screen controls
+- Playlist creation
+- Favorites
+- Recently played songs
+- Search and filter
+- Taste profile quiz
+- Mood tagging
+- Rule-based local recommendations
+- Reading embedded album artwork
+- Saving thumbnails locally
+- Manual .lrc import
+- Synchronized lyric display
+- Local lyrics caching
+
+Feasible but Needs Care
+- Online thumbnail lookup
+- Online .lrc lookup
+- Correctly matching song title, artist, and album
+- Avoiding wrong thumbnails or lyrics
+- Displaying source references properly
+- Handling missing metadata
+- Handling copyright-sensitive resources safely
+
+Not Included / Out of Scope
+- Music downloading
+- YouTube-to-MP3 conversion
+- Video-to-audio conversion
+- Streaming copyrighted music
+- Hosting or distributing music files
+- Public music sharing
+- Full Spotify-style streaming service
+- AI recommendation model from scratch
+
+Limitations
+- TasteBud only plays audio files already available on the user's device.
+- TasteBud does not provide or download music.
+- TasteBud does not convert online videos or media into audio files.
+- Online thumbnail and lyrics lookup require internet connection.
+- Online resources may not always be available or accurate.
+- Users are responsible for the legality of the audio files stored on their device.
+- Retrieved thumbnails and lyrics are stored locally and removed when the app is uninstalled or app data is cleared.
+- The recommendation system is rule-based and depends on available song metadata, mood tags, and listening activity.
+
+Copyright Disclaimer
+TasteBud is an offline-first audio player. The application does not provide, host, sell, distribute, convert, or claim ownership of any music files played in the app. Users are responsible for ensuring that the audio files stored on their device are legally obtained.
+
+Thumbnails and lyrics retrieved online are used only as supporting metadata for personal listening. When available, TasteBud will display the source link or reference for retrieved thumbnails and lyrics. These resources are stored locally on the user's device and are removed when the app is uninstalled or app data is cleared.
+
+What Makes TasteBud Unique
+TasteBud is unique because it focuses on improving the local music listening experience instead of trying to become a streaming or downloading platform. It combines offline audio playback with taste-based organization, mood-based recommendations, automatic thumbnails, and synchronized lyrics.
+
+Most basic audio players only play and list songs. TasteBud helps users personalize and rediscover the music already on their device.
+
+What Makes TasteBud Better
+TasteBud improves the user experience by reducing manual organization. It helps users find music based on mood, keeps the library visually organized with thumbnails, supports synced lyrics, and works mostly offline.
+
+Its main strength is that it respects copyright boundaries while still giving users a smarter, cleaner, and more personalized local music player.
+
+Final Capstone Scope Statement
+TasteBud is an offline-first mobile audio player that plays and organizes audio files stored on the user's device. It provides playlist management, favorites, recently played songs, search, mood-based organization, taste profile recommendations, embedded album art detection, optional online thumbnail lookup with references, .lrc lyric import, optional online lyric lookup with references, and synchronized lyrics playback. The system does not provide music downloads, streaming, media conversion, or public music sharing.
+
+
+TasteBud Design Direction
+
+Theme Concept
+TasteBud will use a Taste Deck design concept. The music library will feel like a personalized deck of song cards where users can browse, favorite, organize, and view lyrics through gesture-based interactions.
+
+The goal is to make music browsing feel interactive while still keeping the app practical as an offline audio player.
+
+Taste Deck View
+The Taste Deck is the main card-based music player and discovery view. Each song appears as a card.
+
+Taste Deck gestures:
+- Swipe right: next song
+- Swipe left: previous song
+- Swipe up: favorite song
+- Tap card: flip card to show lyrics
+- Tap again: return to the front of the card
+- Swipe down: return to the home/library page
+- Hold card: open quick action menu
+
+Card Front
+The front of the card displays:
+- song thumbnail or album art
+- song title
+- artist
+- mood tags
+- genre
+- favorite status
+- playback controls
+- lyrics availability indicator
+- thumbnail or lyrics source indicator when available
+
+Card Back
+The back of the card displays:
+- synchronized .lrc lyrics
+- current lyric highlight
+- lyric source or reference link when available
+- Add Lyrics button if no lyrics are available
+
+Quick Action Menu
+Holding a song card opens a quick action menu.
+
+Quick actions may include:
+- Favorite or unfavorite
+- Add to playlist
+- Add to queue
+- View song details
+- Add or edit lyrics
+- Change thumbnail
+- Select moods
+- Remove from library
+
+Home / Library Layout
+The home screen will use a layered library layout. It will keep normal music browsing practical while the Taste Deck remains the interactive player view.
+
+Suggested layers:
+- Now Playing layer
+- Taste Deck shortcut layer
+- Recently played layer
+- Favorites layer
+- Playlists layer
+- Mood collections layer
+
+Home song item interactions:
+- Tap song: open Taste Deck for that song
+- Hold song: open action menu
+- Swipe right: customizable action
+- Swipe left: customizable action
+
+Customizable Swipe Actions
+Users can customize the left and right swipe actions for library song items.
+
+Available actions:
+- Add to queue
+- Add to playlist
+- Favorite
+- Archive
+- Delete
+- Play next
+- Open lyrics
+- Change thumbnail
+
+Recommended default actions:
+- Swipe right: add to queue
+- Swipe left: archive
+
+Delete should require confirmation to avoid accidental removal.
+
+Mood System
+TasteBud will use mood colors to help users organize and recognize songs visually.
+
+Default moods:
+- Chill: light blue
+- Happy: yellow
+- Focus: green
+- Sad: blue
+- Hype: orange
+- Romantic: pink
+- Relapse: red (custom mood example)
+
+Mood Customization
+Mood colors are customizable. Users can edit existing moods, change mood colors, and create new mood categories.
+
+Manual Mood Tagging
+From the song action menu, users can open a mood selector. The mood selector displays mood chips or color buttons.
+
+Mood tagging behavior:
+- Tap a mood to add the song to that mood.
+- Tap the same mood again to remove the song from that mood.
+- A song can have more than one mood.
+- Users can add custom moods.
+- Users can change mood colors.
+- Mood tags appear on the song card and in the library.
+
+Example:
+A song can be tagged as both Chill and Romantic, or Focus and Sad, depending on the user's preference.
+
+Theme System
+TasteBud will support adjustable 3-color themes.
+
+Each theme contains:
+- Primary: main card color
+- Secondary: effects, shadows, gradients, and background accents
+- Tertiary: card accent color, buttons, highlights, and borders
+
+Default theme:
+- Primary: white
+- Secondary: black
+- Tertiary: gold
+
+Theme Examples
+Default Premium:
+- Primary: white
+- Secondary: black
+- Tertiary: gold
+
+Night Deck:
+- Primary: charcoal
+- Secondary: deep black
+- Tertiary: neon blue
+
+Soft Vinyl:
+- Primary: cream
+- Secondary: warm brown
+- Tertiary: orange/gold
+
+Design Identity
+TasteBud's design will feel like a personalized deck of music cards. Each card reflects the song thumbnail, mood colors, favorite status, lyrics availability, and user-selected theme.
+
+The mood system gives each song a visual identity, while the 3-color theme system lets users customize the overall app style.
