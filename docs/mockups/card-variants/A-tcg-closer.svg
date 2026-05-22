@@ -1,138 +1,279 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" font-family="-apple-system, SF Pro Display, Segoe UI, Roboto, sans-serif">
   <defs>
-    <pattern id="gridPlus" x="0" y="0" width="56" height="56" patternUnits="userSpaceOnUse">
-      <path d="M26,22 L30,22 M28,20 L28,24" stroke="#3a3a3a" stroke-width="1"/>
+    <!-- background grid with plus marks -->
+    <pattern id="gridPlus" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M18,16 L22,16 M20,14 L20,18" stroke="#3a3a3a" stroke-width="0.8"/>
     </pattern>
+
+    <!-- Holographic art gradient (iridescent) -->
     <linearGradient id="holo" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#9be3ff"/>
-      <stop offset="40%" stop-color="#d6b8ff"/>
-      <stop offset="75%" stop-color="#ffb3da"/>
+      <stop offset="35%" stop-color="#d8b8ff"/>
+      <stop offset="70%" stop-color="#ffb3da"/>
       <stop offset="100%" stop-color="#ffe5a3"/>
     </linearGradient>
+
+    <!-- Gold gradient for crest -->
     <linearGradient id="gold" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffe082"/>
+      <stop offset="0%" stop-color="#fff0a8"/>
       <stop offset="50%" stop-color="#D4AF37"/>
       <stop offset="100%" stop-color="#7a5d12"/>
     </linearGradient>
+    <linearGradient id="goldFlat" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a8851a"/>
+      <stop offset="50%" stop-color="#ffe082"/>
+      <stop offset="100%" stop-color="#a8851a"/>
+    </linearGradient>
+
     <filter id="cardShadow"><feDropShadow dx="0" dy="14" stdDeviation="22" flood-color="#000" flood-opacity="0.55"/></filter>
+    <filter id="crestShadow"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.45"/></filter>
   </defs>
 
+  <!-- Black grid background -->
   <rect width="390" height="844" fill="#0a0a0a"/>
   <rect width="390" height="844" fill="url(#gridPlus)"/>
 
-  <text x="30" y="32" font-size="14" font-weight="600" fill="#fff">9:41</text>
-  <g transform="translate(310,22)" fill="#fff"><rect y="2" width="14" height="10" rx="1"/><rect x="18" width="3" height="12" rx="0.5"/><rect x="24" y="2" width="20" height="8" rx="2"/></g>
-  <text x="30" y="74" font-size="22" fill="#fff">⌄</text>
-  <text x="360" y="74" font-size="20" fill="#fff" text-anchor="end">⋯</text>
+  <!-- Corner registration marks -->
+  <g stroke="#555" stroke-width="1" fill="none">
+    <path d="M14,14 L28,14 M14,14 L14,28"/>
+    <path d="M376,14 L362,14 M376,14 L376,28"/>
+    <path d="M14,830 L28,830 M14,830 L14,816"/>
+    <path d="M376,830 L362,830 M376,830 L376,816"/>
+  </g>
 
-  <!-- ====== CARD (irregular silhouette) ====== -->
+  <!-- Top status (subtle, white-on-black) -->
+  <text x="30" y="30" font-size="12" font-weight="600" fill="#aaa">9:41</text>
+  <text x="30" y="58" font-size="20" fill="#fff">⌄</text>
+  <text x="360" y="58" font-size="18" fill="#fff" text-anchor="end">⋯</text>
+
+  <!-- ============== CARD SILHOUETTE ==============
+       Top: title banner extends with bracket cuts (notches at corners)
+       Bottom: V-notch in the middle dividing the two stat pills -->
   <g filter="url(#cardShadow)">
-    <path d="M40,180 L102,180 L120,164 L270,164 L288,180 L350,180 L350,236 L340,250 L340,694 L350,708 L350,752 L260,752 L244,766 L146,766 L130,752 L40,752 L40,708 L50,694 L50,250 L40,236 Z" fill="#FFFFFF"/>
+    <path d="
+      M 36,206
+      L 70,206
+      L 84,192
+      L 306,192
+      L 320,206
+      L 354,206
+      L 354,234
+      L 348,242
+      L 348,742
+      L 354,750
+      L 354,772
+      L 224,772
+      L 214,786
+      L 195,786
+      L 195,772
+      L 195,772
+      L 176,772
+      L 166,786
+      L 156,786
+      L 156,772
+      L 36,772
+      L 36,750
+      L 42,742
+      L 42,242
+      L 36,234
+      Z" fill="#FFFFFF"/>
   </g>
-  <path d="M50,190 L106,190 L122,174 L268,174 L284,190 L340,190 L340,234 L332,244 L332,692 L340,704 L340,742 L256,742 L240,756 L150,756 L134,742 L50,742 L50,704 L58,692 L58,244 L50,234 Z" fill="none" stroke="#000" stroke-width="0.7" opacity="0.15"/>
 
-  <!-- ====== GOLD WING CREST (extends ABOVE card edge) ====== -->
-  <g transform="translate(195,162)">
-    <!-- Left wing -->
-    <path d="M-2,18 Q-30,-2 -68,2 Q-58,18 -38,26 Q-20,30 -8,26 Z" fill="url(#gold)" stroke="#5a4612" stroke-width="0.8"/>
-    <path d="M-12,16 Q-32,8 -56,8" fill="none" stroke="#fff" stroke-width="0.6" opacity="0.6"/>
-    <!-- Right wing -->
-    <path d="M2,18 Q30,-2 68,2 Q58,18 38,26 Q20,30 8,26 Z" fill="url(#gold)" stroke="#5a4612" stroke-width="0.8"/>
-    <path d="M12,16 Q32,8 56,8" fill="none" stroke="#fff" stroke-width="0.6" opacity="0.6"/>
-    <!-- Center hex -->
-    <polygon points="0,-8 13,0 13,16 0,24 -13,16 -13,0" fill="url(#gold)" stroke="#5a4612" stroke-width="1"/>
-    <polygon points="0,-2 8,2 8,12 0,16 -8,12 -8,2" fill="none" stroke="#fff" stroke-width="1"/>
-    <circle cx="0" cy="7" r="2" fill="#fff"/>
+  <!-- Re-draw bottom V notch correctly (clean centered triangle cutout between the two stats) -->
+  <!-- The path above approximated; we add a clean triangle in the background color to bite the bottom edge -->
+  <polygon points="170,772 220,772 195,792" fill="#0a0a0a"/>
+  <polygon points="170,772 220,772 195,792" fill="url(#gridPlus)"/>
+
+  <!-- Inner detail line -->
+  <path d="
+    M 48,214
+    L 76,214
+    L 90,200
+    L 300,200
+    L 314,214
+    L 342,214
+    L 342,738
+    L 342,762
+    L 224,762
+    L 200,786
+    L 190,786
+    L 166,762
+    L 48,762
+    L 48,214
+    Z" fill="none" stroke="#000" stroke-width="0.6" opacity="0.18"/>
+
+  <!-- ============== GOLD WING CREST ==============
+       Sits ABOVE the card edge — wings extend beyond title banner -->
+  <g transform="translate(195,176)" filter="url(#crestShadow)">
+    <!-- Left wing layered feathers -->
+    <path d="M-6,18 Q-44,4 -90,2 Q-78,22 -56,32 Q-34,38 -14,32 Z" fill="url(#gold)" stroke="#5a4612" stroke-width="0.8"/>
+    <path d="M-12,16 Q-40,12 -72,12" fill="none" stroke="#fff8d4" stroke-width="0.6" opacity="0.7"/>
+    <path d="M-16,22 Q-40,22 -64,24" fill="none" stroke="#5a4612" stroke-width="0.4"/>
+
+    <!-- Right wing layered feathers -->
+    <path d="M6,18 Q44,4 90,2 Q78,22 56,32 Q34,38 14,32 Z" fill="url(#gold)" stroke="#5a4612" stroke-width="0.8"/>
+    <path d="M12,16 Q40,12 72,12" fill="none" stroke="#fff8d4" stroke-width="0.6" opacity="0.7"/>
+    <path d="M16,22 Q40,22 64,24" fill="none" stroke="#5a4612" stroke-width="0.4"/>
+
+    <!-- Center hex jewel -->
+    <polygon points="0,-12 16,-2 16,18 0,28 -16,18 -16,-2" fill="url(#gold)" stroke="#5a4612" stroke-width="1.2"/>
+    <polygon points="0,-4 10,2 10,14 0,20 -10,14 -10,2" fill="#fff8d4" stroke="#5a4612" stroke-width="0.6"/>
+    <polygon points="0,-4 10,2 10,14 0,20 -10,14 -10,2" fill="url(#gold)" opacity="0.4"/>
+    <!-- shine -->
+    <path d="M-6,0 L-2,4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
   </g>
 
-  <!-- TITLE BANNER -->
+  <!-- ============== TITLE BANNER (bracket shape) ============== -->
+  <!-- White banner that bridges the wing base -->
   <g>
-    <path d="M82,206 L308,206 L320,224 L308,242 L82,242 L70,224 Z" fill="#FFFFFF" stroke="#000" stroke-width="1.8"/>
-    <text x="195" y="231" font-size="18" font-weight="900" fill="#000" text-anchor="middle" letter-spacing="4">MIDNIGHT DRIVE</text>
+    <path d="
+      M 86,196
+      L 304,196
+      L 318,210
+      L 304,228
+      L 86,228
+      L 72,210 Z" fill="#FFFFFF" stroke="#000" stroke-width="2"/>
+    <text x="195" y="218" font-size="17" font-weight="900" fill="#000" text-anchor="middle" letter-spacing="3.5">MIDNIGHT DRIVE</text>
   </g>
 
-  <!-- HOLOGRAPHIC ART WINDOW (big, dominant) -->
+  <!-- ============== ART WINDOW (huge, holographic) ============== -->
   <g>
-    <rect x="64" y="258" width="262" height="356" rx="6" fill="url(#holo)"/>
+    <rect x="58" y="242" width="274" height="368" rx="4" fill="url(#holo)"/>
+
     <!-- diagonal foil streaks -->
-    <polygon points="64,440 130,258 200,258 110,614 64,614" fill="#fff" opacity="0.18"/>
-    <polygon points="230,258 290,258 240,614 200,614" fill="#000" opacity="0.10"/>
-    <!-- noise lines -->
-    <g opacity="0.3" stroke="#fff" stroke-width="0.5">
-      <line x1="64" y1="290" x2="326" y2="280"/>
-      <line x1="64" y1="340" x2="326" y2="334"/>
-      <line x1="64" y1="400" x2="326" y2="396"/>
-      <line x1="64" y1="460" x2="326" y2="458"/>
-      <line x1="64" y1="520" x2="326" y2="522"/>
-      <line x1="64" y1="580" x2="326" y2="586"/>
+    <polygon points="58,420 130,242 200,242 110,610 58,610" fill="#fff" opacity="0.20"/>
+    <polygon points="230,242 290,242 240,610 200,610" fill="#000" opacity="0.10"/>
+    <polygon points="270,242 308,242 280,610 250,610" fill="#fff" opacity="0.12"/>
+
+    <!-- horizontal holographic lines -->
+    <g opacity="0.32" stroke="#fff" stroke-width="0.5">
+      <line x1="58" y1="270" x2="332" y2="262"/>
+      <line x1="58" y1="310" x2="332" y2="306"/>
+      <line x1="58" y1="350" x2="332" y2="348"/>
+      <line x1="58" y1="400" x2="332" y2="402"/>
+      <line x1="58" y1="450" x2="332" y2="454"/>
+      <line x1="58" y1="500" x2="332" y2="504"/>
+      <line x1="58" y1="550" x2="332" y2="556"/>
     </g>
-    <text x="195" y="470" font-size="220" fill="#fff" opacity="0.5" text-anchor="middle" font-weight="100">♪</text>
+
+    <!-- "character" placeholder (album art symbol) -->
+    <text x="195" y="500" font-size="280" fill="#fff" opacity="0.55" text-anchor="middle" font-weight="100">♪</text>
+
+    <!-- subtle prismatic edge shadow -->
+    <rect x="58" y="242" width="274" height="368" rx="4" fill="none" stroke="#fff" stroke-width="1" opacity="0.3"/>
   </g>
 
-  <!-- COST PILL (top-right of art) -->
-  <g transform="translate(298,272)">
-    <rect width="32" height="56" rx="16" fill="#000" stroke="#fff" stroke-width="1.5"/>
-    <polygon points="16,12 19,21 28,21 21,27 24,36 16,30 8,36 11,27 4,21 13,21" fill="#D4AF37"/>
-    <text x="16" y="50" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">3</text>
+  <!-- ============== COST/TRACK PILL (right side, vertical) ============== -->
+  <g transform="translate(300,266)">
+    <!-- pill -->
+    <rect width="34" height="62" rx="17" fill="#0a0a0a" stroke="#fff" stroke-width="1.8"/>
+    <!-- star/diamond -->
+    <polygon points="17,16 20,23 28,24 22,30 24,38 17,34 10,38 12,30 6,24 14,23" fill="#D4AF37"/>
+    <!-- number -->
+    <text x="17" y="56" font-size="15" font-weight="900" fill="#fff" text-anchor="middle">3</text>
   </g>
 
-  <!-- LRC + Heart -->
-  <rect x="74" y="270" width="44" height="20" rx="10" fill="#000"/>
-  <text x="96" y="284" font-size="9" font-weight="800" fill="#D4AF37" text-anchor="middle">LRC ✓</text>
-  <circle cx="86" cy="600" r="14" fill="#000"/>
-  <text x="86" y="606" font-size="14" fill="#EC407A" text-anchor="middle">♥</text>
+  <!-- ============== LRC + Heart corner badges in art ============== -->
+  <g transform="translate(72,258)">
+    <rect width="46" height="20" rx="10" fill="#000"/>
+    <text x="23" y="14" font-size="9" font-weight="800" fill="#D4AF37" text-anchor="middle">LRC ✓</text>
+  </g>
+  <g transform="translate(86,590)">
+    <circle r="14" fill="#000"/>
+    <text x="0" y="5" font-size="14" fill="#EC407A" text-anchor="middle">♥</text>
+  </g>
 
-  <!-- SIDE TAB (left) with barcode + vertical name -->
-  <g>
-    <path d="M40,632 L130,632 L130,700 L106,700 L106,720 L40,720 Z" fill="#FFFFFF" stroke="#000" stroke-width="1.5"/>
+  <!-- ============== LEFT SIDE: BARCODE + SERIAL TAB ============== -->
+  <g transform="translate(56,624)">
+    <!-- small tab background -->
+    <path d="M0,0 L92,0 L92,52 L72,52 L72,68 L0,68 Z" fill="#FFFFFF" stroke="#000" stroke-width="1.4"/>
+    <!-- barcode -->
     <g fill="#000">
-      <rect x="48" y="638" width="2" height="22"/><rect x="52" y="638" width="1" height="22"/><rect x="55" y="638" width="3" height="22"/>
-      <rect x="60" y="638" width="1" height="22"/><rect x="63" y="638" width="2" height="22"/><rect x="67" y="638" width="1" height="22"/>
-      <rect x="70" y="638" width="3" height="22"/><rect x="75" y="638" width="2" height="22"/><rect x="79" y="638" width="1" height="22"/>
-      <rect x="82" y="638" width="2" height="22"/><rect x="86" y="638" width="3" height="22"/>
+      <rect x="6" y="6" width="2" height="20"/>
+      <rect x="10" y="6" width="1" height="20"/>
+      <rect x="13" y="6" width="3" height="20"/>
+      <rect x="18" y="6" width="1" height="20"/>
+      <rect x="21" y="6" width="2" height="20"/>
+      <rect x="25" y="6" width="1" height="20"/>
+      <rect x="28" y="6" width="3" height="20"/>
+      <rect x="33" y="6" width="2" height="20"/>
+      <rect x="37" y="6" width="1" height="20"/>
+      <rect x="40" y="6" width="2" height="20"/>
+      <rect x="44" y="6" width="3" height="20"/>
+      <rect x="49" y="6" width="1" height="20"/>
+      <rect x="52" y="6" width="2" height="20"/>
     </g>
-    <text x="125" y="644" font-size="6" fill="#000" text-anchor="end">No. 0003</text>
-    <text x="73" y="714" font-size="9" font-weight="800" fill="#000" transform="rotate(-90 73,714)">MIDNIGHT</text>
+    <text x="86" y="10" font-size="6" fill="#000" text-anchor="end">No. 0003</text>
+    <!-- vertical name -->
+    <text x="36" y="62" font-size="8" font-weight="800" fill="#000" letter-spacing="1" transform="rotate(-90 36,62)">MIDNIGHT</text>
   </g>
 
-  <!-- ARTIST DISC -->
-  <g>
-    <circle cx="170" cy="676" r="36" fill="#FFFFFF" stroke="#000" stroke-width="1.5"/>
-    <circle cx="170" cy="676" r="22" fill="#000"/>
-    <circle cx="170" cy="676" r="3" fill="#D4AF37"/>
-    <path id="topArc" d="M138,676 A32,32 0 0 1 202,676" fill="none"/>
-    <text font-size="9" font-weight="700" fill="#000" letter-spacing="2"><textPath href="#topArc" startOffset="50%" text-anchor="middle">LO-FI NIGHTS</textPath></text>
+  <!-- ============== CIRCULAR ARTIST DISC ============== -->
+  <g transform="translate(178,664)">
+    <!-- outer disc -->
+    <circle r="44" fill="#FFFFFF" stroke="#000" stroke-width="1.8"/>
+    <!-- inner black disc -->
+    <circle r="28" fill="#000"/>
+    <!-- mystical symbol — crescent + spark -->
+    <path d="M-6,-2 A10,10 0 1 0 -6,6" fill="none" stroke="#D4AF37" stroke-width="2.2"/>
+    <polygon points="8,-4 10,0 14,2 10,4 8,8 6,4 2,2 6,0" fill="#D4AF37"/>
+    <!-- arc text top -->
+    <path id="discTop" d="M-38,0 A38,38 0 0 1 38,0" fill="none"/>
+    <text font-size="11" font-weight="800" fill="#000" letter-spacing="3">
+      <textPath href="#discTop" startOffset="50%" text-anchor="middle">MIDNIGHT</textPath>
+    </text>
+    <!-- arc text bottom -->
+    <path id="discBot" d="M-32,0 A32,32 0 0 0 32,0" fill="none"/>
+    <text font-size="8" font-weight="700" fill="#000" letter-spacing="2">
+      <textPath href="#discBot" startOffset="50%" text-anchor="middle">Lo-fi Nights</textPath>
+    </text>
   </g>
 
-  <!-- MOOD TAG black bar -->
-  <rect x="216" y="640" width="118" height="20" rx="2" fill="#000"/>
-  <text x="275" y="654" font-size="10" font-weight="800" fill="#fff" text-anchor="middle" letter-spacing="2">CHILL · FOCUS</text>
-
-  <!-- DESCRIPTION area -->
-  <text x="216" y="678" font-size="10" font-weight="700" fill="#000">Synced lyrics available.</text>
-  <text x="216" y="692" font-size="9" fill="#333">Tap card to flip and read along.</text>
-  <text x="216" y="706" font-size="9" fill="#333">Swipe up to favorite.</text>
-  <text x="334" y="722" font-size="7" fill="#888" text-anchor="end">No. 0003</text>
-
-  <!-- BOTTOM STAT PILLS -->
-  <g transform="translate(78,734)">
-    <rect width="116" height="34" rx="6" fill="#000"/>
-    <text x="16" y="23" font-size="14" fill="#D4AF37">⏱</text>
-    <text x="100" y="24" font-size="16" font-weight="800" fill="#fff" text-anchor="end">3:42</text>
-  </g>
-  <g transform="translate(202,734)">
-    <rect width="116" height="34" rx="6" fill="#000"/>
-    <text x="14" y="24" font-size="16" font-weight="800" fill="#fff">87</text>
-    <text x="44" y="23" font-size="11" fill="#bbb">plays</text>
-    <polygon points="100,12 100,24 108,18" fill="#D4AF37"/>
+  <!-- ============== "1 PER TURN" — small mood tag ============== -->
+  <g transform="translate(244,628)">
+    <rect width="86" height="20" rx="2" fill="#000"/>
+    <text x="43" y="14" font-size="10" font-weight="900" fill="#fff" text-anchor="middle" letter-spacing="1.5">CHILL · FOCUS</text>
   </g>
 
-  <!-- mini controls below card -->
-  <g transform="translate(0,792)">
-    <g transform="translate(110,4)" fill="#fff"><polygon points="14,0 14,20 0,10"/><rect x="14" width="3" height="20"/></g>
+  <!-- ============== DESCRIPTION TEXT ============== -->
+  <g transform="translate(244,660)">
+    <text x="0" y="0" font-size="10" font-weight="700" fill="#000">Synced lyrics available.</text>
+    <text x="0" y="14" font-size="9.5" fill="#222">Tap card to flip and</text>
+    <text x="0" y="26" font-size="9.5" fill="#222">read along. Swipe up</text>
+    <text x="0" y="38" font-size="9.5" fill="#222">to favorite. Hold for</text>
+    <text x="0" y="50" font-size="9.5" fill="#222">actions.</text>
+    <text x="88" y="62" font-size="7" font-weight="700" fill="#888" text-anchor="end">No. 0003</text>
+  </g>
+
+  <!-- ============== BOTTOM STAT PILLS (with V-notch between) ============== -->
+  <!-- Left: duration -->
+  <g transform="translate(54,734)">
+    <path d="M0,0 L130,0 L130,30 L0,30 Z" fill="#000"/>
+    <!-- sword-icon analog: clock -->
+    <g transform="translate(10,15)" fill="none" stroke="#D4AF37" stroke-width="1.8">
+      <circle r="7"/>
+      <line x1="0" y1="0" x2="0" y2="-4"/>
+      <line x1="0" y1="0" x2="3.5" y2="2"/>
+    </g>
+    <text x="118" y="20" font-size="17" font-weight="900" fill="#fff" text-anchor="end">3:42</text>
+  </g>
+
+  <!-- Right: plays -->
+  <g transform="translate(206,734)">
+    <path d="M0,0 L130,0 L130,30 L0,30 Z" fill="#000"/>
+    <text x="12" y="22" font-size="17" font-weight="900" fill="#fff">87</text>
+    <text x="42" y="20" font-size="10" fill="#bbb">plays</text>
+    <!-- shield-icon analog: triangle play -->
+    <g transform="translate(110,15)" fill="none" stroke="#D4AF37" stroke-width="1.8">
+      <path d="M-7,-7 L7,-7 L0,7 Z" fill="#D4AF37"/>
+    </g>
+  </g>
+
+  <!-- ============== MINI CONTROLS BELOW ============== -->
+  <g transform="translate(0,802)">
+    <g transform="translate(115,4)" fill="#fff"><polygon points="14,0 14,20 0,10"/><rect x="14" width="3" height="20"/></g>
     <circle cx="195" cy="14" r="22" fill="#D4AF37"/>
     <polygon points="189,4 189,24 207,14" fill="#000"/>
-    <g transform="translate(254,4)" fill="#fff"><polygon points="0,0 0,20 14,10"/><rect x="14" width="3" height="20"/></g>
+    <g transform="translate(253,4)" fill="#fff"><polygon points="0,0 0,20 14,10"/><rect x="14" width="3" height="20"/></g>
   </g>
-  <text x="195" y="832" font-size="9" fill="#666" text-anchor="middle" font-style="italic">Tap to flip · Swipe ↓ to exit</text>
 </svg>
