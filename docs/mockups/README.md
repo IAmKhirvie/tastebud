@@ -65,9 +65,22 @@ Held-card menu. Bottom-sheet style.
 
 ---
 
+## 5. Mood Match — Smart Queue
+
+When you play a song and turn on **Mood Match**, TasteBud reads the song's mood tags and your taste profile, then queues other songs that match. Sad song playing? Next ones are Sad-tagged too. It's rule-based, runs fully offline, and you can swipe left on any pick to skip it (the algorithm learns from your skips).
+
+![Mood Match Smart Queue](./05-mood-match-queue.svg)
+
+**Notes:**
+- The percentage on each queued song = the match score (mood overlap × taste-profile weight).
+- The toggle at the top turns Mood Match on/off. With it off, shuffle is purely random.
+- Reasoning label ("Matched 'Sad' mood (3)") explains *why* these songs were picked — transparent algorithm, not a black box.
+- Drag the `≡` handle to manually reorder the queue.
+
+---
+
 ## Coming next
 
-- 05 — Mood selector / chip editor
 - 06 — Taste Profile Quiz (intro + question card)
 - 07 — Theme picker (Default Premium / Night Deck / Soft Vinyl)
 - 08 — Settings screen

@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" font-family="-apple-system, SF Pro Display, Segoe UI, Roboto, sans-serif">
+  <defs>
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#000" flood-opacity="0.06"/>
+    </filter>
+    <linearGradient id="heroGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#2a2a2a"/>
+    </linearGradient>
+    <radialGradient id="pulse" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#D4AF37" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Device frame -->
+  <rect x="0" y="0" width="390" height="844" rx="44" fill="#000"/>
+  <rect x="6" y="6" width="378" height="832" rx="38" fill="#FFFFFF"/>
+
+  <!-- Dynamic Island -->
+  <rect x="155" y="14" width="80" height="22" rx="11" fill="#000"/>
+
+  <!-- Status bar -->
+  <text x="30" y="32" font-size="14" font-weight="600" fill="#000">9:41</text>
+  <g transform="translate(310,22)" fill="#000">
+    <rect x="0" y="2" width="14" height="10" rx="1"/>
+    <rect x="18" y="0" width="3" height="12" rx="0.5"/>
+    <rect x="24" y="2" width="20" height="8" rx="2"/>
+  </g>
+
+  <!-- Top bar -->
+  <text x="24" y="74" font-size="22" fill="#000">‹</text>
+  <text x="195" y="74" font-size="16" font-weight="700" fill="#000" text-anchor="middle">Mood Match</text>
+  <text x="366" y="74" font-size="18" fill="#000" text-anchor="end">⋯</text>
+
+  <!-- HERO CARD — the algorithm explanation -->
+  <g filter="url(#cardShadow)">
+    <rect x="24" y="100" width="342" height="178" rx="22" fill="url(#heroGrad)"/>
+  </g>
+
+  <!-- Animated-looking pulse around the dot -->
+  <circle cx="60" cy="140" r="28" fill="url(#pulse)"/>
+  <circle cx="60" cy="140" r="10" fill="#D4AF37"/>
+  <circle cx="60" cy="140" r="5" fill="#000"/>
+
+  <text x="100" y="130" font-size="10" font-weight="700" fill="#D4AF37" letter-spacing="1.5">SMART QUEUE — READING MOOD</text>
+  <text x="100" y="154" font-size="20" font-weight="700" fill="#fff">Continuing the Sad vibe</text>
+  <text x="100" y="174" font-size="12" fill="#bbb">Based on what you played last</text>
+
+  <!-- Detected mood pill -->
+  <rect x="40" y="200" width="80" height="32" rx="16" fill="#1E5AAF"/>
+  <circle cx="56" cy="216" r="5" fill="#fff"/>
+  <text x="68" y="220" font-size="13" font-weight="700" fill="#fff">Sad</text>
+
+  <text x="130" y="220" font-size="12" fill="#888">Detected mood</text>
+
+  <text x="40" y="258" font-size="10" fill="#888">Algorithm uses song mood tags + your taste profile.</text>
+  <text x="40" y="272" font-size="10" fill="#888">No internet needed. Tap any song to swap it.</text>
+
+  <!-- Toggle row -->
+  <rect x="24" y="296" width="342" height="56" rx="14" fill="#F4F4F4"/>
+  <text x="40" y="320" font-size="14" font-weight="600" fill="#000">Mood Match</text>
+  <text x="40" y="338" font-size="11" fill="#777">Picks next songs that match the current mood</text>
+  <!-- Toggle ON -->
+  <rect x="312" y="312" width="42" height="24" rx="12" fill="#D4AF37"/>
+  <circle cx="342" cy="324" r="9" fill="#fff"/>
+
+  <!-- Up next list header -->
+  <text x="24" y="382" font-size="13" font-weight="700" fill="#000" letter-spacing="0.5">UP NEXT</text>
+  <text x="366" y="382" font-size="11" fill="#888" text-anchor="end">Shuffle</text>
+
+  <!-- Now playing item -->
+  <g transform="translate(24,396)">
+    <rect width="342" height="60" rx="14" fill="#000"/>
+    <rect x="10" y="10" width="40" height="40" rx="8" fill="#1E5AAF"/>
+    <text x="30" y="36" font-size="16" fill="#fff" font-weight="700" text-anchor="middle">E</text>
+    <text x="60" y="28" font-size="11" font-weight="700" fill="#D4AF37" letter-spacing="0.5">NOW PLAYING</text>
+    <text x="60" y="46" font-size="14" font-weight="600" fill="#fff">Empty Roads</text>
+    <text x="60" y="56" font-size="10" fill="#999" >Quiet Hours · 4:12</text>
+    <!-- equalizer bars -->
+    <g transform="translate(304,22)" fill="#D4AF37">
+      <rect x="0" y="6" width="3" height="10" rx="1"/>
+      <rect x="6" y="2" width="3" height="14" rx="1"/>
+      <rect x="12" y="8" width="3" height="8" rx="1"/>
+      <rect x="18" y="0" width="3" height="16" rx="1"/>
+    </g>
+  </g>
+
+  <!-- Reasoning label -->
+  <text x="24" y="478" font-size="10" fill="#888" letter-spacing="0.3">QUEUED — Matched 'Sad' mood (3)</text>
+
+  <!-- Queue items -->
+  <g transform="translate(24,490)">
+    <rect width="342" height="56" rx="14" fill="#FAFAFA"/>
+    <rect x="8" y="8" width="40" height="40" rx="8" fill="#1E5AAF"/>
+    <text x="28" y="34" font-size="16" fill="#fff" font-weight="700" text-anchor="middle">R</text>
+    <text x="58" y="28" font-size="14" font-weight="600" fill="#000">Rainfall Window</text>
+    <text x="58" y="44" font-size="11" fill="#777">Halcyon · 3:51</text>
+    <circle cx="252" cy="28" r="4" fill="#1E5AAF"/>
+    <text x="260" y="32" font-size="10" fill="#888">Sad</text>
+    <text x="298" y="33" font-size="11" font-weight="600" fill="#D4AF37">98%</text>
+    <text x="328" y="34" font-size="14" fill="#000">≡</text>
+  </g>
+
+  <g transform="translate(24,554)">
+    <rect width="342" height="56" rx="14" fill="#FAFAFA"/>
+    <rect x="8" y="8" width="40" height="40" rx="8" fill="#1E5AAF" opacity="0.85"/>
+    <text x="28" y="34" font-size="16" fill="#fff" font-weight="700" text-anchor="middle">B</text>
+    <text x="58" y="28" font-size="14" font-weight="600" fill="#000">Blue After You</text>
+    <text x="58" y="44" font-size="11" fill="#777">Lila Moss · 4:02</text>
+    <circle cx="240" cy="28" r="4" fill="#1E5AAF"/>
+    <circle cx="252" cy="28" r="4" fill="#EC407A"/>
+    <text x="260" y="32" font-size="10" fill="#888">Sad, Rom</text>
+    <text x="298" y="33" font-size="11" font-weight="600" fill="#D4AF37">87%</text>
+    <text x="328" y="34" font-size="14" fill="#000">≡</text>
+  </g>
+
+  <g transform="translate(24,618)">
+    <rect width="342" height="56" rx="14" fill="#FAFAFA"/>
+    <rect x="8" y="8" width="40" height="40" rx="8" fill="#3a5a8a"/>
+    <text x="28" y="34" font-size="16" fill="#fff" font-weight="700" text-anchor="middle">F</text>
+    <text x="58" y="28" font-size="14" font-weight="600" fill="#000">Far From Home</text>
+    <text x="58" y="44" font-size="11" fill="#777">Tomas K. · 3:18</text>
+    <circle cx="252" cy="28" r="4" fill="#1E5AAF"/>
+    <text x="260" y="32" font-size="10" fill="#888">Sad</text>
+    <text x="298" y="33" font-size="11" font-weight="600" fill="#D4AF37">76%</text>
+    <text x="328" y="34" font-size="14" fill="#000">≡</text>
+  </g>
+
+  <!-- Override hint -->
+  <text x="195" y="708" font-size="10" fill="#999" text-anchor="middle" font-style="italic">Don't like a pick? Swipe left to skip — algorithm learns.</text>
+
+  <!-- BOTTOM NAV -->
+  <rect x="0" y="772" width="390" height="72" fill="#FFFFFF"/>
+  <line x1="0" y1="772" x2="390" y2="772" stroke="#EEEEEE" stroke-width="1"/>
+
+  <g transform="translate(40,790)">
+    <path d="M0,12 L10,2 L20,12 L20,22 L0,22 Z" fill="none" stroke="#999" stroke-width="1.6"/>
+  </g>
+  <text x="50" y="828" font-size="10" fill="#999" text-anchor="middle">Home</text>
+
+  <g transform="translate(135,790)">
+    <rect x="2" y="4" width="14" height="18" rx="2" fill="#000"/>
+    <rect x="6" y="0" width="14" height="18" rx="2" fill="#000"/>
+  </g>
+  <text x="145" y="828" font-size="10" font-weight="700" fill="#000" text-anchor="middle">Taste Deck</text>
+  <circle cx="145" cy="836" r="2" fill="#D4AF37"/>
+
+  <g transform="translate(232,790)" stroke="#999" stroke-width="1.6" fill="none">
+    <line x1="0" y1="2" x2="0" y2="22"/>
+    <line x1="6" y1="0" x2="6" y2="22"/>
+    <line x1="12" y1="4" x2="14" y2="20"/>
+  </g>
+  <text x="240" y="828" font-size="10" fill="#999" text-anchor="middle">Library</text>
+
+  <g transform="translate(330,790)" stroke="#999" stroke-width="1.6" fill="none">
+    <circle cx="10" cy="6" r="5"/>
+    <path d="M2,22 Q10,12 18,22"/>
+  </g>
+  <text x="340" y="828" font-size="10" fill="#999" text-anchor="middle">Profile</text>
+</svg>
