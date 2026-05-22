@@ -661,20 +661,20 @@
   <!-- ============ MIDDLE: CARD STAGE ============ -->
   <main class="stage" id="stage">
     <div class="phone" id="phone">
-      <div class="phone-island"></div>
+      <div class="phone-island draggable" data-key="island"></div>
       <div class="phone-statusbar">
-        <span>9:41</span>
+        <span class="draggable" data-key="time" style="cursor:inherit;">9:41</span>
         <span class="icons">
-          <span style="font-size:12px;">●●●●</span>
-          <span class="ic-batt"></span>
+          <span class="draggable" data-key="signal" style="font-size:12px;">●●●●</span>
+          <span class="ic-batt draggable" data-key="battery"></span>
         </span>
       </div>
       <div class="phone-topbar">
-        <span style="font-size:18px;font-weight:400;">⌄</span>
-        <span class="label">
+        <span class="draggable" data-key="topChevron" style="font-size:18px;font-weight:400;">⌄</span>
+        <span class="label draggable" data-key="topTitle">
           TASTE DECK<br><span class="sub" id="phoneSubEl">Card 3 of 47</span>
         </span>
-        <span style="font-size:18px;font-weight:400;">⋯</span>
+        <span class="draggable" data-key="topMenu" style="font-size:18px;font-weight:400;">⋯</span>
       </div>
       <div class="phone-screen">
         <div class="card" id="card">
@@ -793,11 +793,11 @@
       </div><!-- /.card -->
       </div><!-- /.phone-screen -->
       <div class="phone-bottombar">
-        <span class="ctrl-prev">⏮</span>
-        <span class="ctrl-play">▶</span>
-        <span class="ctrl-next">⏭</span>
+        <span class="ctrl-prev draggable" data-key="ctrlPrev">⏮</span>
+        <span class="ctrl-play draggable" data-key="ctrlPlay">▶</span>
+        <span class="ctrl-next draggable" data-key="ctrlNext">⏭</span>
       </div>
-      <div class="phone-homebar"></div>
+      <div class="phone-homebar draggable" data-key="homebar"></div>
     </div><!-- /.phone -->
   </main>
 
