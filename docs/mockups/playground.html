@@ -505,6 +505,24 @@
   body.drag-mode .draggable.selected {
     outline: 2px solid var(--accent);
   }
+  .draggable.deleted { display: none !important; }
+
+  /* Floating delete button shown next to selected element */
+  .delete-fab {
+    position: fixed;
+    width: 32px; height: 32px;
+    background: #ff3b30;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    display: none;
+    align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px;
+    cursor: pointer;
+    z-index: 200;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  }
+  .delete-fab.show { display: flex; }
   .drag-indicator {
     position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
     background: var(--accent); color: #000; font-weight: 800; font-size: 11px;
@@ -629,6 +647,10 @@
         Turn ON to drag any element on the card. Click an element to select it, drag to reposition. Positions are saved to the spec.
       </div>
       <button class="btn ghost" id="resetPosBtn" style="margin-top:10px">Reset positions</button>
+      <button class="btn ghost" id="restoreBtn" style="margin-top:6px">Restore deleted elements</button>
+      <div class="hint" style="margin-top:8px">
+        Click element → press <b>Delete</b> or <b>Backspace</b>, or use the red × button that appears.
+      </div>
     </div>
 
     <button class="btn" id="copyBtn">COPY SPEC TO CLIPBOARD</button>
@@ -793,7 +815,8 @@
 </div>
 
 <div class="badge-copied" id="copiedTag">COPIED ✓</div>
-<div class="drag-indicator" id="dragInd">DRAG MODE — click & drag any element</div>
+<div class="drag-indicator" id="dragInd">DRAG MODE — drag to move · click + Delete to remove</div>
+<div class="delete-fab" id="delFab" title="Delete selected element">×</div>
 
 <script>
   const $ = id => document.getElementById(id);
@@ -1019,11 +1042,12 @@
     renderSpec();
   });
 
-  // Inject offsets into the spec output
+  // Inject offsets + deletions into the spec output
   const originalRender = renderSpec;
   renderSpec = function() {
     const s = originalRender();
     s.positions = dragState.offsets;
+    s.deleted_elements = Array.from(deleted);
     $('specOut').textContent = JSON.stringify(s, null, 2);
     return s;
   };
@@ -1032,6 +1056,59 @@
   document.body.classList.add('drag-mode');
   $('dragLabel').textContent = 'Drag mode: ON';
   $('dragToggle').classList.add('on');
+
+  // ============== SELECTION + DELETE ==============
+  const deleted = new Set();
+  let selectedEl = null;
+
+  function selectEl(el) {
+    document.querySelectorAll('.draggable.selected').forEach(e => e.classList.remove('selected'));
+    selectedEl = el;
+    if (!el) { $('delFab').classList.remove('show'); return; }
+    el.classList.add('selected');
+    const r = el.getBoundingClientRect();
+    const fab = $('delFab');
+    fab.classList.add('show');
+    fab.style.left = (r.right - 16) + 'px';
+    fab.style.top  = (r.top - 16) + 'px';
+  }
+
+  function deleteSelected() {
+    if (!selectedEl) return;
+    const k = selectedEl.dataset.key;
+    deleted.add(k);
+    selectedEl.classList.add('deleted');
+    selectEl(null);
+    renderSpec();
+  }
+
+  function restoreAll() {
+    deleted.clear();
+    document.querySelectorAll('.draggable.deleted').forEach(el => el.classList.remove('deleted'));
+    renderSpec();
+  }
+
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('.draggable');
+    if (t && !dragState.active) selectEl(t);
+    else if (!t && !e.target.closest('.delete-fab')) selectEl(null);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if ((e.key === 'Delete' || e.key === 'Backspace') && selectedEl) {
+      e.preventDefault();
+      deleteSelected();
+    }
+    if (e.key === 'Escape') selectEl(null);
+  });
+
+  $('delFab').addEventListener('click', deleteSelected);
+  $('restoreBtn').addEventListener('click', restoreAll);
+
+  // Re-anchor the delete FAB when window scrolls/resizes
+  window.addEventListener('scroll', () => selectedEl && selectEl(selectedEl));
+  window.addEventListener('resize', () => selectedEl && selectEl(selectedEl));
 
   // Click wheel: clicking around the disc rotates the scrub dot
   const disc = document.getElementById('discEl');
