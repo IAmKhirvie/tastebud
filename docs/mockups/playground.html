@@ -637,6 +637,15 @@
       </label>
     </div>
 
+    <div class="group" id="selPanel" style="display:none">
+      <h3>SELECTED ELEMENT — <span id="selKey" style="color:#fff">none</span></h3>
+      <label class="row"><span>Background</span><input type="color" id="elBg" value="#FFFFFF"/></label>
+      <label class="row"><span>Text color</span><input type="color" id="elFg" value="#000000"/></label>
+      <label class="row"><span>Border color</span><input type="color" id="elBorder" value="#000000"/></label>
+      <button class="btn ghost" id="elClear">Clear overrides</button>
+      <div class="hint">Pick any element on the card to recolor just that piece.</div>
+    </div>
+
     <div class="group">
       <h3>INTERACTION</h3>
       <div class="toggle-pill" id="dragToggle">
@@ -1048,6 +1057,7 @@
     const s = originalRender();
     s.positions = dragState.offsets;
     s.deleted_elements = Array.from(deleted);
+    s.color_overrides = colorOverrides;
     $('specOut').textContent = JSON.stringify(s, null, 2);
     return s;
   };
@@ -1059,19 +1069,70 @@
 
   // ============== SELECTION + DELETE ==============
   const deleted = new Set();
+  const colorOverrides = {}; // key -> {bg, fg, border}
   let selectedEl = null;
+
+  function rgbToHex(rgb) {
+    if (!rgb || rgb === 'transparent' || rgb.indexOf('rgba(0, 0, 0, 0)') >= 0) return '#000000';
+    if (rgb.startsWith('#')) return rgb;
+    const m = rgb.match(/\d+/g);
+    if (!m) return '#000000';
+    const h = n => (+n).toString(16).padStart(2,'0');
+    return '#' + h(m[0]) + h(m[1]) + h(m[2]);
+  }
 
   function selectEl(el) {
     document.querySelectorAll('.draggable.selected').forEach(e => e.classList.remove('selected'));
     selectedEl = el;
-    if (!el) { $('delFab').classList.remove('show'); return; }
+    const panel = $('selPanel');
+    if (!el) {
+      $('delFab').classList.remove('show');
+      panel.style.display = 'none';
+      return;
+    }
     el.classList.add('selected');
     const r = el.getBoundingClientRect();
     const fab = $('delFab');
     fab.classList.add('show');
     fab.style.left = (r.right - 16) + 'px';
     fab.style.top  = (r.top - 16) + 'px';
+
+    // Show element color panel
+    panel.style.display = '';
+    $('selKey').textContent = el.dataset.key || 'element';
+    const cs = getComputedStyle(el);
+    const ov = colorOverrides[el.dataset.key] || {};
+    $('elBg').value     = ov.bg     || rgbToHex(cs.backgroundColor);
+    $('elFg').value     = ov.fg     || rgbToHex(cs.color);
+    $('elBorder').value = ov.border || rgbToHex(cs.borderColor || cs.outlineColor);
   }
+
+  function applyElColor(prop, color) {
+    if (!selectedEl) return;
+    const k = selectedEl.dataset.key;
+    colorOverrides[k] = colorOverrides[k] || {};
+    colorOverrides[k][prop] = color;
+    if (prop === 'bg')     selectedEl.style.backgroundColor = color;
+    if (prop === 'fg')     selectedEl.style.color = color;
+    if (prop === 'border') selectedEl.style.borderColor = color;
+    renderSpec();
+  }
+
+  ['elBg','elFg','elBorder'].forEach(id => {
+    const prop = id === 'elBg' ? 'bg' : id === 'elFg' ? 'fg' : 'border';
+    document.getElementById(id).addEventListener('input', e => applyElColor(prop, e.target.value));
+  });
+
+  document.getElementById('elClear').addEventListener('click', () => {
+    if (!selectedEl) return;
+    const k = selectedEl.dataset.key;
+    delete colorOverrides[k];
+    selectedEl.style.backgroundColor = '';
+    selectedEl.style.color = '';
+    selectedEl.style.borderColor = '';
+    selectEl(selectedEl);
+    renderSpec();
+  });
 
   function deleteSelected() {
     if (!selectedEl) return;
