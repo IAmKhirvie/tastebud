@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>TasteBud — Taste Deck Card Playground</title>
+<style>
+  :root {
+    --primary: #FFFFFF;
+    --secondary: #000000;
+    --accent: #D4AF37;
+    --bg: #0a0a0a;
+    --grid: #3a3a3a;
+    --card-w: 320px;
+    --card-h: 560px;
+    --crest-scale: 1;
+    --art-hue: 0deg;
+    --art-sat: 1;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: -apple-system, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: #eee;
+    min-height: 100vh;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 360px 1fr 420px;
+    min-height: 100vh;
+  }
+
+  /* ---------- Sidebar (controls) ---------- */
+  .panel {
+    background: #111;
+    border-right: 1px solid #222;
+    padding: 24px 20px;
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+  .panel h1 {
+    font-size: 18px; margin: 0 0 4px;
+    letter-spacing: 0.5px;
+  }
+  .panel .sub {
+    font-size: 11px; color: #888; margin-bottom: 24px;
+  }
+  .group {
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #222;
+  }
+  .group:last-child { border: none; }
+  .group h3 {
+    font-size: 11px; letter-spacing: 1.5px; color: #D4AF37;
+    margin: 0 0 12px; font-weight: 700;
+  }
+  label.row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px; font-size: 12px; gap: 12px;
+  }
+  label.row span { color: #aaa; flex-shrink: 0; }
+  label.row input[type="text"],
+  label.row input[type="number"],
+  label.row select {
+    background: #1c1c1c; border: 1px solid #333; color: #fff;
+    padding: 6px 8px; border-radius: 6px; font-size: 12px;
+    width: 160px; font-family: inherit;
+  }
+  label.row input[type="color"] {
+    width: 40px; height: 28px; padding: 0; border: 1px solid #333;
+    background: transparent; border-radius: 6px; cursor: pointer;
+  }
+  label.row input[type="range"] {
+    width: 160px;
+  }
+  label.row input[type="checkbox"] {
+    width: 18px; height: 18px;
+  }
+  .btn {
+    display: block; width: 100%;
+    background: var(--accent); color: #000;
+    border: none; border-radius: 8px;
+    padding: 12px; font-weight: 800; font-size: 13px;
+    cursor: pointer; letter-spacing: 1px;
+    margin-top: 8px;
+  }
+  .btn.ghost {
+    background: transparent; color: #fff; border: 1px solid #333;
+    font-weight: 600;
+  }
+  .btn:active { transform: translateY(1px); }
+  .hint {
+    font-size: 10px; color: #666; margin-top: 6px; line-height: 1.4;
+  }
+
+  /* ---------- Card stage ---------- */
+  .stage {
+    display: flex; align-items: center; justify-content: center;
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(circle, var(--grid) 1px, transparent 1.5px),
+      radial-gradient(circle, var(--grid) 1px, transparent 1.5px);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
+    padding: 40px;
+    position: relative;
+  }
+
+  /* Card */
+  .card {
+    position: relative;
+    width: var(--card-w);
+    height: var(--card-h);
+    filter: drop-shadow(0 14px 22px rgba(0,0,0,0.55));
+  }
+  .card-surface {
+    position: absolute; inset: 0;
+    background: var(--primary);
+    -webkit-mask: var(--silhouette);
+            mask: var(--silhouette);
+  }
+  /* SVG silhouette + outer outline */
+  .card-svg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    overflow: visible;
+  }
+
+  /* Wing crest */
+  .crest {
+    position: absolute;
+    left: 50%;
+    top: calc(-22px * var(--crest-scale));
+    transform: translateX(-50%) scale(var(--crest-scale));
+    transform-origin: top center;
+    width: 200px; height: 50px;
+    z-index: 5;
+    filter: drop-shadow(0 3px 4px rgba(0,0,0,0.45));
+  }
+
+  /* Title banner */
+  .banner {
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    top: 6px;
+    width: 78%; height: 38px;
+    background: var(--primary);
+    color: var(--secondary);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 15px; letter-spacing: 3.5px;
+    border: 2px solid var(--secondary);
+    clip-path: polygon(8% 0, 92% 0, 100% 50%, 92% 100%, 8% 100%, 0 50%);
+    z-index: 4;
+    text-align: center;
+    padding: 0 6px;
+    white-space: nowrap;
+  }
+
+  /* Art window */
+  .art {
+    position: absolute;
+    left: 8%; right: 8%;
+    top: 60px;
+    bottom: 32%;
+    border-radius: 6px;
+    background: linear-gradient(135deg,
+      hsl(calc(195 + var(--art-hue)) 100% calc(70% + 0%)),
+      hsl(calc(275 + var(--art-hue)) 80% 80%),
+      hsl(calc(330 + var(--art-hue)) 100% 84%),
+      hsl(calc(45  + var(--art-hue)) 100% 80%));
+    overflow: hidden;
+    filter: saturate(var(--art-sat));
+  }
+  .art::after {
+    content: "♪";
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; opacity: 0.5; font-size: 180px; font-weight: 100;
+  }
+  .art .streak {
+    position: absolute;
+    top: 0; bottom: 0;
+    background: #fff; opacity: 0.18;
+  }
+  .art .s1 { left: 20%; width: 24%; transform: skewX(-18deg); }
+  .art .s2 { left: 60%; width: 14%; transform: skewX(-18deg); background: #000; opacity: 0.10; }
+
+  /* Cost pill */
+  .pill-cost {
+    position: absolute;
+    right: 4%;
+    top: 70px;
+    width: 32px; height: 60px;
+    border-radius: 16px;
+    background: #0a0a0a;
+    border: 1.8px solid #fff;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: #fff; font-weight: 900; font-size: 14px;
+    z-index: 5;
+  }
+  .pill-cost .star {
+    color: var(--accent); font-size: 18px; line-height: 1;
+    margin-top: 2px; margin-bottom: -2px;
+  }
+
+  /* LRC + Heart badges */
+  .badge-lrc {
+    position: absolute;
+    left: 12%; top: 70px;
+    background: #000; color: var(--accent);
+    padding: 3px 8px; border-radius: 10px;
+    font-size: 9px; font-weight: 800;
+    z-index: 5;
+  }
+  .badge-fav {
+    position: absolute;
+    left: 13%;
+    bottom: 38%;
+    width: 28px; height: 28px;
+    background: #000; color: #EC407A;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    z-index: 5;
+  }
+
+  /* Lower-area zone */
+  .lower {
+    position: absolute;
+    left: 6%; right: 6%;
+    top: 70%; bottom: 12%;
+  }
+
+  /* Artist disc */
+  .disc {
+    position: absolute;
+    left: 4%; bottom: 10%;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1.8px solid #000;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .disc-inner {
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    background: #000;
+    color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .disc svg { position: absolute; inset: 0; }
+
+  /* Side barcode tab */
+  .tab {
+    position: absolute;
+    left: 6%; bottom: 30%;
+    width: 92px;
+    background: #fff;
+    border: 1.4px solid #000;
+    padding: 6px 8px;
+    font-size: 6px; color: #000;
+    clip-path: polygon(0 0, 100% 0, 100% 78%, 78% 78%, 78% 100%, 0 100%);
+  }
+  .tab .bars {
+    display: flex; gap: 1px; align-items: stretch; height: 22px;
+    margin-bottom: 2px;
+  }
+  .tab .bars span { display: block; background: #000; }
+  .tab-vertical {
+    position: absolute;
+    bottom: 12%;
+    left: 9%;
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    font-size: 7px; font-weight: 800; color: #000;
+    letter-spacing: 1px;
+  }
+
+  /* Mood tag */
+  .mood {
+    position: absolute;
+    right: 4%;
+    top: 4%;
+    background: #000; color: #fff;
+    padding: 4px 10px;
+    font-size: 9px; font-weight: 900; letter-spacing: 1.5px;
+  }
+  /* Description */
+  .desc {
+    position: absolute;
+    right: 4%;
+    top: 22%;
+    width: 50%;
+    font-size: 9px; color: #222;
+    line-height: 1.45;
+  }
+  .desc strong { color: #000; font-size: 9.5px; }
+
+  /* Bottom stats */
+  .stat {
+    position: absolute;
+    bottom: 0;
+    height: 30px;
+    background: #000; color: #fff;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 10px;
+    font-weight: 900; font-size: 15px;
+  }
+  .stat .ic { color: var(--accent); font-size: 13px; }
+  .stat.left  { left: 0; width: 42%; }
+  .stat.right { right: 0; width: 42%; }
+
+  /* The V-notch between the stats */
+  .vnotch {
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    bottom: -16px;
+    width: 50px; height: 30px;
+    background: var(--bg);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+
+  /* ---------- Code panel (right) ---------- */
+  .code-panel {
+    background: #0d0d0d;
+    border-left: 1px solid #222;
+    padding: 24px 20px;
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+  .code-panel h2 { font-size: 16px; margin: 0 0 8px; }
+  .code-panel p { font-size: 11px; color: #888; margin: 0 0 14px; line-height: 1.5; }
+  pre {
+    background: #000; border: 1px solid #222; border-radius: 8px;
+    padding: 14px; font-size: 11px; color: #d4d4d4;
+    overflow-x: auto; white-space: pre; line-height: 1.5;
+    max-height: 60vh;
+  }
+  .row-btns { display: flex; gap: 8px; margin-bottom: 12px; }
+  .row-btns .btn { margin-top: 0; }
+  .badge-copied {
+    position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+    background: var(--accent); color: #000; font-weight: 800; font-size: 12px;
+    padding: 8px 14px; border-radius: 8px; opacity: 0; transition: opacity 0.2s;
+    pointer-events: none; z-index: 999;
+  }
+  .badge-copied.show { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- ============ LEFT: CONTROLS ============ -->
+  <aside class="panel">
+    <h1>Taste Deck Playground</h1>
+    <div class="sub">Tweak the card. Hit "Copy spec" when it looks right.</div>
+
+    <div class="group">
+      <h3>SONG</h3>
+      <label class="row"><span>Title</span>
+        <input type="text" id="title" value="MIDNIGHT DRIVE"/>
+      </label>
+      <label class="row"><span>Artist</span>
+        <input type="text" id="artist" value="MIDNIGHT"/>
+      </label>
+      <label class="row"><span>Album</span>
+        <input type="text" id="album" value="Lo-fi Nights"/>
+      </label>
+      <label class="row"><span>Mood tag</span>
+        <input type="text" id="moodtag" value="CHILL · FOCUS"/>
+      </label>
+      <label class="row"><span>Track #</span>
+        <input type="number" id="trackno" value="3" min="1" max="99"/>
+      </label>
+      <label class="row"><span>Duration</span>
+        <input type="text" id="duration" value="3:42"/>
+      </label>
+      <label class="row"><span>Plays</span>
+        <input type="number" id="plays" value="87"/>
+      </label>
+      <label class="row"><span>Serial No.</span>
+        <input type="text" id="serial" value="0003"/>
+      </label>
+    </div>
+
+    <div class="group">
+      <h3>PALETTE — 60 / 30 / 10</h3>
+      <label class="row"><span>Primary (60%)</span>
+        <input type="color" id="primary" value="#FFFFFF"/>
+      </label>
+      <label class="row"><span>Secondary (30%)</span>
+        <input type="color" id="secondary" value="#000000"/>
+      </label>
+      <label class="row"><span>Accent (10%)</span>
+        <input type="color" id="accent" value="#D4AF37"/>
+      </label>
+      <label class="row"><span>Page bg</span>
+        <input type="color" id="bg" value="#0a0a0a"/>
+      </label>
+    </div>
+
+    <div class="group">
+      <h3>PROPORTIONS</h3>
+      <label class="row"><span>Card width</span>
+        <input type="range" id="cardw" min="260" max="380" value="320"/>
+      </label>
+      <label class="row"><span>Card height</span>
+        <input type="range" id="cardh" min="460" max="700" value="560"/>
+      </label>
+      <label class="row"><span>Crest size</span>
+        <input type="range" id="crest" min="0.6" max="1.6" step="0.05" value="1"/>
+      </label>
+      <label class="row"><span>Title letter-spacing</span>
+        <input type="range" id="ls" min="0" max="6" step="0.5" value="3.5"/>
+      </label>
+    </div>
+
+    <div class="group">
+      <h3>ART WINDOW</h3>
+      <label class="row"><span>Hue shift</span>
+        <input type="range" id="hue" min="0" max="360" value="0"/>
+      </label>
+      <label class="row"><span>Saturation</span>
+        <input type="range" id="sat" min="0.4" max="1.8" step="0.05" value="1"/>
+      </label>
+    </div>
+
+    <div class="group">
+      <h3>TOGGLES</h3>
+      <label class="row"><span>Show LRC badge</span>
+        <input type="checkbox" id="tLrc" checked/>
+      </label>
+      <label class="row"><span>Show ♥ badge</span>
+        <input type="checkbox" id="tHeart" checked/>
+      </label>
+      <label class="row"><span>Show barcode tab</span>
+        <input type="checkbox" id="tTab" checked/>
+      </label>
+      <label class="row"><span>Show V-notch</span>
+        <input type="checkbox" id="tVnotch" checked/>
+      </label>
+    </div>
+
+    <button class="btn" id="copyBtn">COPY SPEC TO CLIPBOARD</button>
+    <button class="btn ghost" id="resetBtn">Reset to defaults</button>
+    <div class="hint">After you copy, paste the spec into chat and I'll match the design exactly.</div>
+  </aside>
+
+  <!-- ============ MIDDLE: CARD STAGE ============ -->
+  <main class="stage">
+    <div class="card" id="card">
+
+      <!-- Card silhouette (SVG) -->
+      <svg class="card-svg" viewBox="0 0 320 560" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="goldG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff0a8"/>
+            <stop offset="0.5" stop-color="#D4AF37"/>
+            <stop offset="1" stop-color="#7a5d12"/>
+          </linearGradient>
+        </defs>
+        <!-- Filled silhouette -->
+        <path id="cardPath"
+              d="M 18,28
+                 L 50,28 L 62,16 L 258,16 L 270,28 L 302,28
+                 L 302,52 L 296,60 L 296,508 L 302,516 L 302,536
+                 L 192,536 L 184,548 L 175,548 L 175,536
+                 L 145,536 L 145,548 L 136,548 L 128,536
+                 L 18,536
+                 L 18,516 L 24,508 L 24,60 L 18,52 Z"
+              fill="var(--primary)" stroke="var(--secondary)" stroke-width="0"/>
+        <path d="M 26,36 L 52,36 L 64,24 L 256,24 L 268,36 L 294,36
+                 L 294,510 L 294,528 L 188,528 L 178,540
+                 L 142,540 L 132,528 L 26,528 Z"
+              fill="none" stroke="var(--secondary)" stroke-width="0.6" opacity="0.18"/>
+      </svg>
+
+      <!-- Gold wing crest -->
+      <svg class="crest" viewBox="-100 -30 200 60">
+        <!-- Left wing -->
+        <path d="M-6,18 Q-44,4 -90,2 Q-78,22 -56,32 Q-34,38 -14,32 Z"
+              fill="url(#goldG2)" stroke="#5a4612" stroke-width="0.8"/>
+        <path d="M-12,16 Q-40,12 -72,12" fill="none" stroke="#fff8d4" stroke-width="0.6" opacity="0.7"/>
+        <!-- Right wing -->
+        <path d="M6,18 Q44,4 90,2 Q78,22 56,32 Q34,38 14,32 Z"
+              fill="url(#goldG2)" stroke="#5a4612" stroke-width="0.8"/>
+        <path d="M12,16 Q40,12 72,12" fill="none" stroke="#fff8d4" stroke-width="0.6" opacity="0.7"/>
+        <!-- Center hex jewel -->
+        <polygon points="0,-12 16,-2 16,18 0,28 -16,18 -16,-2"
+                 fill="url(#goldG2)" stroke="#5a4612" stroke-width="1.2"/>
+        <polygon points="0,-4 10,2 10,14 0,20 -10,14 -10,2"
+                 fill="#fff8d4" stroke="#5a4612" stroke-width="0.6"/>
+        <path d="M-6,0 L-2,4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+        <defs>
+          <linearGradient id="goldG2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff0a8"/>
+            <stop offset="0.5" stop-color="#D4AF37"/>
+            <stop offset="1" stop-color="#7a5d12"/>
+          </linearGradient>
+        </defs>
+      </svg>
+
+      <!-- Title banner -->
+      <div class="banner" id="bannerEl">MIDNIGHT DRIVE</div>
+
+      <!-- Art window -->
+      <div class="art">
+        <div class="streak s1"></div>
+        <div class="streak s2"></div>
+      </div>
+
+      <!-- Cost pill -->
+      <div class="pill-cost">
+        <div class="star">★</div>
+        <div id="trackEl">3</div>
+      </div>
+
+      <!-- LRC + heart -->
+      <div class="badge-lrc" id="lrcEl">LRC ✓</div>
+      <div class="badge-fav" id="favEl">♥</div>
+
+      <!-- Mood tag -->
+      <div class="lower">
+        <div class="mood" id="moodEl">CHILL · FOCUS</div>
+        <div class="desc">
+          <strong>Synced lyrics available.</strong><br>
+          Tap card to flip and read along.<br>
+          Swipe up to favorite. Hold for actions.
+        </div>
+
+        <!-- Artist disc -->
+        <div class="disc">
+          <svg viewBox="0 0 80 80">
+            <defs>
+              <path id="arcTop" d="M 8,40 A 32,32 0 0 1 72,40"/>
+              <path id="arcBot" d="M 12,40 A 28,28 0 0 0 68,40"/>
+            </defs>
+            <text font-size="9" font-weight="800" fill="#000" letter-spacing="2">
+              <textPath href="#arcTop" startOffset="50%" text-anchor="middle" id="arcArtist">MIDNIGHT</textPath>
+            </text>
+            <text font-size="7" font-weight="700" fill="#000" letter-spacing="1.5">
+              <textPath href="#arcBot" startOffset="50%" text-anchor="middle" id="arcAlbum">Lo-fi Nights</textPath>
+            </text>
+          </svg>
+          <div class="disc-inner">✦</div>
+        </div>
+
+        <!-- Side tab -->
+        <div class="tab" id="tabEl">
+          <div class="bars">
+            <span style="width:2px"></span><span style="width:1px"></span>
+            <span style="width:3px"></span><span style="width:1px"></span>
+            <span style="width:2px"></span><span style="width:1px"></span>
+            <span style="width:3px"></span><span style="width:2px"></span>
+            <span style="width:1px"></span><span style="width:2px"></span>
+            <span style="width:3px"></span><span style="width:1px"></span>
+            <span style="width:2px"></span><span style="width:1px"></span>
+          </div>
+          <div style="text-align:right">No. <span id="serialEl">0003</span></div>
+        </div>
+
+        <!-- Bottom stats -->
+        <div class="stat left"><span class="ic">⏱</span><span id="durEl">3:42</span></div>
+        <div class="stat right"><span id="playsEl">87</span><span class="ic">▶</span></div>
+        <div class="vnotch" id="vnotchEl"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ============ RIGHT: SPEC CODE ============ -->
+  <aside class="code-panel">
+    <h2>Card spec</h2>
+    <p>Updates live as you tweak. Paste this back to me in chat and I'll match it exactly in the SVG mockups.</p>
+    <div class="row-btns">
+      <button class="btn" id="copyBtn2">Copy</button>
+      <button class="btn ghost" id="dlBtn">Download .json</button>
+    </div>
+    <pre id="specOut">{}</pre>
+  </aside>
+
+</div>
+
+<div class="badge-copied" id="copiedTag">COPIED ✓</div>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const root = document.documentElement;
+
+  function updateCSSVar(name, value) {
+    root.style.setProperty(name, value);
+  }
+
+  function renderSpec() {
+    const spec = {
+      song: {
+        title: $('title').value,
+        artist: $('artist').value,
+        album: $('album').value,
+        mood_tag: $('moodtag').value,
+        track_no: +$('trackno').value,
+        duration: $('duration').value,
+        plays: +$('plays').value,
+        serial: $('serial').value,
+      },
+      palette: {
+        primary: $('primary').value,
+        secondary: $('secondary').value,
+        accent: $('accent').value,
+        background: $('bg').value,
+      },
+      proportions: {
+        card_width_px: +$('cardw').value,
+        card_height_px: +$('cardh').value,
+        crest_scale: +$('crest').value,
+        title_letter_spacing_px: +$('ls').value,
+      },
+      art_window: {
+        hue_shift_deg: +$('hue').value,
+        saturation: +$('sat').value,
+      },
+      elements: {
+        show_lrc_badge: $('tLrc').checked,
+        show_heart_badge: $('tHeart').checked,
+        show_barcode_tab: $('tTab').checked,
+        show_v_notch: $('tVnotch').checked,
+      }
+    };
+    $('specOut').textContent = JSON.stringify(spec, null, 2);
+    return spec;
+  }
+
+  function applySpec() {
+    const s = renderSpec();
+    updateCSSVar('--primary', s.palette.primary);
+    updateCSSVar('--secondary', s.palette.secondary);
+    updateCSSVar('--accent', s.palette.accent);
+    updateCSSVar('--bg', s.palette.background);
+    updateCSSVar('--card-w', s.proportions.card_width_px + 'px');
+    updateCSSVar('--card-h', s.proportions.card_height_px + 'px');
+    updateCSSVar('--crest-scale', s.proportions.crest_scale);
+    updateCSSVar('--art-hue', s.art_window.hue_shift_deg + 'deg');
+    updateCSSVar('--art-sat', s.art_window.saturation);
+
+    $('bannerEl').textContent = s.song.title;
+    $('bannerEl').style.letterSpacing = s.proportions.title_letter_spacing_px + 'px';
+    $('moodEl').textContent = s.song.mood_tag;
+    $('trackEl').textContent = s.song.track_no;
+    $('durEl').textContent = s.song.duration;
+    $('playsEl').textContent = s.song.plays;
+    $('serialEl').textContent = s.song.serial;
+    $('arcArtist').textContent = s.song.artist;
+    $('arcAlbum').textContent = s.song.album;
+
+    $('lrcEl').style.display = s.elements.show_lrc_badge ? '' : 'none';
+    $('favEl').style.display = s.elements.show_heart_badge ? '' : 'none';
+    $('tabEl').style.display = s.elements.show_barcode_tab ? '' : 'none';
+    $('vnotchEl').style.display = s.elements.show_v_notch ? '' : 'none';
+  }
+
+  document.querySelectorAll('input').forEach(el => {
+    el.addEventListener('input', applySpec);
+    el.addEventListener('change', applySpec);
+  });
+
+  async function copyToClipboard() {
+    const text = $('specOut').textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+      const t = $('copiedTag');
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 1200);
+    } catch (e) {
+      // fallback
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); ta.remove();
+      alert('Copied');
+    }
+  }
+  $('copyBtn').addEventListener('click', copyToClipboard);
+  $('copyBtn2').addEventListener('click', copyToClipboard);
+
+  $('dlBtn').addEventListener('click', () => {
+    const blob = new Blob([$('specOut').textContent], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'tastebud-card-spec.json';
+    a.click();
+  });
+
+  $('resetBtn').addEventListener('click', () => {
+    location.reload();
+  });
+
+  applySpec();
+</script>
+</body>
+</html>
