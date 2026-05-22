@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="380" height="800" viewBox="0 0 380 800" font-family="-apple-system, Segoe UI, Roboto, sans-serif">
+  <defs>
+    <linearGradient id="lyricsCard" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0d0d0d"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="380" height="800" rx="36" fill="#000"/>
+  <rect x="8" y="8" width="364" height="784" rx="30" fill="#0a0a0a"/>
+
+  <text x="28" y="36" font-size="13" font-weight="600" fill="#fff">9:41</text>
+  <text x="328" y="36" font-size="13" fill="#fff">●●●●</text>
+
+  <text x="28" y="74" font-size="11" font-weight="600" fill="#D4AF37" letter-spacing="2">CARD BACK · LYRICS</text>
+  <text x="28" y="94" font-size="20" font-weight="700" fill="#fff">Midnight Drive</text>
+  <text x="28" y="112" font-size="12" fill="#888">Lo-fi Nights</text>
+  <text x="332" y="80" font-size="20" fill="#fff">↻</text>
+
+  <!-- Lyrics card -->
+  <rect x="30" y="130" width="320" height="500" rx="24" fill="url(#lyricsCard)" stroke="#D4AF37" stroke-width="1.5"/>
+
+  <!-- Synced lyrics -->
+  <text x="190" y="180" font-size="14" fill="#444" text-anchor="middle">[01:02]  Headlights paint the road again</text>
+  <text x="190" y="208" font-size="14" fill="#666" text-anchor="middle">[01:08]  Empty highway, just my friend</text>
+  <text x="190" y="236" font-size="14" fill="#888" text-anchor="middle">[01:14]  The radio hums softly low</text>
+
+  <!-- Currently highlighted -->
+  <rect x="48" y="252" width="284" height="44" rx="10" fill="#D4AF37" opacity="0.15"/>
+  <text x="190" y="280" font-size="18" font-weight="700" fill="#D4AF37" text-anchor="middle">[01:18]  Midnight drive, where do we go</text>
+
+  <text x="190" y="316" font-size="14" fill="#888" text-anchor="middle">[01:24]  City lights begin to fade</text>
+  <text x="190" y="344" font-size="14" fill="#666" text-anchor="middle">[01:30]  Memories the night has made</text>
+  <text x="190" y="372" font-size="14" fill="#555" text-anchor="middle">[01:36]  We'll keep driving 'til the dawn</text>
+  <text x="190" y="400" font-size="14" fill="#444" text-anchor="middle">[01:42]  Singing softly, carrying on</text>
+  <text x="190" y="428" font-size="14" fill="#333" text-anchor="middle">[01:48]  ...</text>
+
+  <!-- Source attribution -->
+  <line x1="55" y1="488" x2="325" y2="488" stroke="#222"/>
+  <text x="55" y="510" font-size="10" fill="#666">Lyrics source:</text>
+  <text x="135" y="510" font-size="10" fill="#D4AF37">lrclib.net</text>
+  <text x="55" y="526" font-size="9" fill="#555">Cached locally · removed on uninstall</text>
+
+  <!-- Add lyrics button area (alternate state hint) -->
+  <rect x="55" y="548" width="270" height="36" rx="18" fill="#1a1a1a" stroke="#333" stroke-dasharray="3,3"/>
+  <text x="190" y="571" font-size="11" fill="#666" text-anchor="middle">+ Import a different .lrc file</text>
+
+  <!-- Mini playback controls -->
+  <g transform="translate(110,610)">
+    <text x="0" y="14" font-size="14" fill="#fff">⏮</text>
+    <circle cx="50" cy="10" r="14" fill="#D4AF37"/>
+    <text x="45" y="16" font-size="14" fill="#000">▶</text>
+    <text x="98" y="14" font-size="14" fill="#fff">⏭</text>
+  </g>
+
+  <!-- Progress -->
+  <rect x="55" y="660" width="270" height="3" rx="1.5" fill="#333"/>
+  <rect x="55" y="660" width="95" height="3" rx="1.5" fill="#D4AF37"/>
+  <text x="55" y="678" font-size="10" fill="#888">1:18</text>
+  <text x="306" y="678" font-size="10" fill="#888">3:42</text>
+
+  <text x="190" y="704" font-size="10" fill="#666" text-anchor="middle" font-style="italic">Tap card to flip back to front</text>
+
+  <!-- Bottom Nav -->
+  <rect x="0" y="720" width="380" height="80" fill="#0a0a0a" stroke="#222" stroke-width="1"/>
+  <text x="42" y="755" font-size="22" opacity="0.5">🏠</text>
+  <text x="36" y="775" font-size="10" fill="#666">Home</text>
+
+  <text x="128" y="755" font-size="22">🎴</text>
+  <text x="118" y="775" font-size="10" font-weight="700" fill="#D4AF37">Taste Deck</text>
+
+  <text x="218" y="755" font-size="22" opacity="0.5">📚</text>
+  <text x="208" y="775" font-size="10" fill="#666">Library</text>
+
+  <text x="310" y="755" font-size="22" opacity="0.5">👤</text>
+  <text x="304" y="775" font-size="10" fill="#666">Profile</text>
+</svg>
