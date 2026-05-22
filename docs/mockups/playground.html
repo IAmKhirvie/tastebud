@@ -133,6 +133,7 @@
     background-position: 0 0, 20px 20px;
     overflow: hidden;
     display: flex; align-items: center; justify-content: center;
+    padding-top: 40px;
   }
   .phone-island {
     position: absolute;
@@ -336,25 +337,60 @@
     top: 70%; bottom: 12%;
   }
 
-  /* Artist disc */
+  /* Artist disc — iPod click wheel */
   .disc {
     position: absolute;
-    left: 4%; bottom: 10%;
-    width: 80px; height: 80px;
+    left: 4%; bottom: 8%;
+    width: 96px; height: 96px;
     border-radius: 50%;
-    background: #fff;
+    background: radial-gradient(circle at 30% 30%, #fdfdfd 0%, #d8d8d8 60%, #aaa 100%);
     border: 1.8px solid #000;
     display: flex; align-items: center; justify-content: center;
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.6),
+                inset 0 -3px 6px rgba(0,0,0,0.25),
+                0 2px 4px rgba(0,0,0,0.15);
+    cursor: pointer;
   }
-  .disc-inner {
-    width: 50px; height: 50px;
+  /* Wheel labels (MENU top, ⏮ left, ⏭ right, ⏯ bottom) */
+  .disc .wlabel {
+    position: absolute;
+    color: #444;
+    font-weight: 800;
+    font-size: 8px;
+    letter-spacing: 1px;
+    user-select: none;
+    pointer-events: none;
+  }
+  .disc .wlabel.top    { top: 8px;  left: 50%; transform: translateX(-50%); }
+  .disc .wlabel.bot    { bottom: 8px; left: 50%; transform: translateX(-50%); font-size: 10px; }
+  .disc .wlabel.left   { left: 8px;  top: 50%; transform: translateY(-50%); font-size: 10px; }
+  .disc .wlabel.right  { right: 8px; top: 50%; transform: translateY(-50%); font-size: 10px; }
+
+  /* Click-wheel scrub indicator dot (animated by JS) */
+  .disc .scrub-dot {
+    position: absolute;
+    width: 8px; height: 8px;
+    background: var(--accent);
     border-radius: 50%;
-    background: #000;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg) translateY(-36px);
+    box-shadow: 0 0 6px var(--accent);
+    pointer-events: none;
+  }
+
+  .disc-inner {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #1f1f1f, #000);
     color: var(--accent);
     display: flex; align-items: center; justify-content: center;
     font-size: 16px;
+    border: 1px solid #000;
+    box-shadow: inset 0 2px 3px rgba(255,255,255,0.15),
+                inset 0 -2px 3px rgba(0,0,0,0.6);
+    z-index: 2;
   }
-  .disc svg { position: absolute; inset: 0; }
+  .disc svg.disc-arcs { position: absolute; inset: 0; pointer-events: none; }
 
   /* Side barcode tab */
   .tab {
@@ -702,20 +738,13 @@
           Swipe up to favorite. Hold for actions.
         </div>
 
-        <!-- Artist disc -->
-        <div class="disc draggable" data-key="disc">
-          <svg viewBox="0 0 80 80">
-            <defs>
-              <path id="arcTop" d="M 8,40 A 32,32 0 0 1 72,40"/>
-              <path id="arcBot" d="M 12,40 A 28,28 0 0 0 68,40"/>
-            </defs>
-            <text font-size="9" font-weight="800" fill="#000" letter-spacing="2">
-              <textPath href="#arcTop" startOffset="50%" text-anchor="middle" id="arcArtist">MIDNIGHT</textPath>
-            </text>
-            <text font-size="7" font-weight="700" fill="#000" letter-spacing="1.5">
-              <textPath href="#arcBot" startOffset="50%" text-anchor="middle" id="arcAlbum">Lo-fi Nights</textPath>
-            </text>
-          </svg>
+        <!-- Artist disc — iPod click wheel -->
+        <div class="disc draggable" data-key="disc" id="discEl">
+          <span class="wlabel top">MENU</span>
+          <span class="wlabel left">⏮</span>
+          <span class="wlabel right">⏭</span>
+          <span class="wlabel bot">⏯</span>
+          <span class="scrub-dot" id="scrubDot"></span>
           <div class="disc-inner">✦</div>
         </div>
 
@@ -833,8 +862,6 @@
     $('durEl').textContent = s.song.duration;
     $('playsEl').textContent = s.song.plays;
     $('serialEl').textContent = s.song.serial;
-    $('arcArtist').textContent = s.song.artist;
-    $('arcAlbum').textContent = s.song.album;
 
     $('lrcEl').style.display = s.elements.show_lrc_badge ? '' : 'none';
     $('favEl').style.display = s.elements.show_heart_badge ? '' : 'none';
@@ -880,7 +907,7 @@
 
   // ============== DRAG & DROP ENGINE ==============
   const dragState = {
-    enabled: false,
+    enabled: true,  // ON by default
     active: null,
     startX: 0, startY: 0,
     startLeft: 0, startTop: 0,
@@ -1000,6 +1027,25 @@
     $('specOut').textContent = JSON.stringify(s, null, 2);
     return s;
   };
+
+  // Initialize drag toggle UI to ON
+  document.body.classList.add('drag-mode');
+  $('dragLabel').textContent = 'Drag mode: ON';
+  $('dragToggle').classList.add('on');
+
+  // Click wheel: clicking around the disc rotates the scrub dot
+  const disc = document.getElementById('discEl');
+  if (disc) {
+    disc.addEventListener('click', (e) => {
+      if (dragState.enabled) return;  // dragging not scrubbing
+      const r = disc.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const angle = Math.atan2(e.clientY - cy, e.clientX - cx) * 180 / Math.PI + 90;
+      const dot = document.getElementById('scrubDot');
+      if (dot) dot.style.transform = `translate(-50%, -50%) rotate(${angle}deg) translateY(-36px)`;
+    });
+  }
 
   applySpec();
   renderSpec();
