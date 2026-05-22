@@ -1,104 +1,225 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="380" height="800" viewBox="0 0 380 800" font-family="-apple-system, Segoe UI, Roboto, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" font-family="-apple-system, SF Pro Display, Segoe UI, Roboto, sans-serif">
   <defs>
-    <linearGradient id="cardBg" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#1a1a1a"/>
-      <stop offset="100%" stop-color="#000"/>
+    <!-- Grid background pattern -->
+    <pattern id="gridPlus" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M22,18 L26,18 M24,16 L24,20" stroke="#333" stroke-width="1"/>
+    </pattern>
+
+    <!-- Holographic album-art gradient (iridescent feel) -->
+    <linearGradient id="holo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A0E9FF"/>
+      <stop offset="35%" stop-color="#E0B0FF"/>
+      <stop offset="70%" stop-color="#FFB0DC"/>
+      <stop offset="100%" stop-color="#FFE7A0"/>
     </linearGradient>
-    <linearGradient id="albumArt" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#D4AF37"/>
-      <stop offset="100%" stop-color="#8B6914"/>
+    <linearGradient id="holoOverlay" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0.35"/>
+      <stop offset="30%" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="70%" stop-color="#000" stop-opacity="0.15"/>
     </linearGradient>
+
+    <!-- Gold gradient for crest -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#8a6f1c"/>
+    </linearGradient>
+
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="14" stdDeviation="24" flood-color="#000" flood-opacity="0.55"/>
+    </filter>
+
+    <!-- Card-shape outline (irregular trading-card silhouette) -->
+    <clipPath id="cardClip">
+      <path d="M48,118
+               L342,118
+               L342,140 L356,154 L356,672 L342,686 L342,756
+               L256,756 L240,768 L150,768 L134,756 L48,756
+               L48,686 L34,672 L34,154 L48,140 Z"/>
+    </clipPath>
   </defs>
 
-  <!-- Phone frame -->
-  <rect x="0" y="0" width="380" height="800" rx="36" fill="#000"/>
-  <rect x="8" y="8" width="364" height="784" rx="30" fill="#0a0a0a"/>
+  <!-- Black background -->
+  <rect x="0" y="0" width="390" height="844" fill="#0a0a0a"/>
+  <rect x="0" y="0" width="390" height="844" fill="url(#gridPlus)"/>
 
-  <!-- Status bar -->
-  <text x="28" y="36" font-size="13" font-weight="600" fill="#fff">9:41</text>
-  <text x="328" y="36" font-size="13" fill="#fff">●●●●</text>
-
-  <!-- Top label -->
-  <text x="28" y="74" font-size="11" font-weight="600" fill="#D4AF37" letter-spacing="2">TASTE DECK</text>
-  <text x="28" y="94" font-size="22" font-weight="700" fill="#fff">Card 3 of 47</text>
-  <text x="332" y="80" font-size="20" fill="#fff">⋯</text>
-
-  <!-- Background card hints (deck effect) -->
-  <rect x="44" y="128" width="292" height="500" rx="22" fill="#1a1a1a" opacity="0.4" transform="rotate(-2 190 378)"/>
-  <rect x="38" y="124" width="304" height="510" rx="22" fill="#1a1a1a" opacity="0.6" transform="rotate(1 190 379)"/>
-
-  <!-- Main card front -->
-  <rect x="30" y="120" width="320" height="520" rx="24" fill="url(#cardBg)" stroke="#D4AF37" stroke-width="1.5"/>
-
-  <!-- Album art -->
-  <rect x="55" y="148" width="270" height="270" rx="16" fill="url(#albumArt)"/>
-  <text x="170" y="295" font-size="60" fill="#fff" opacity="0.3">♪</text>
-
-  <!-- Lyrics indicator badge -->
-  <rect x="290" y="160" width="48" height="22" rx="11" fill="#000" opacity="0.7"/>
-  <text x="299" y="175" font-size="10" fill="#D4AF37">LRC ✓</text>
-
-  <!-- Favorite heart (top-left of art) -->
-  <circle cx="80" cy="172" r="16" fill="#000" opacity="0.5"/>
-  <text x="71" y="178" font-size="16" fill="#EC407A">♥</text>
-
-  <!-- Song info -->
-  <text x="190" y="450" font-size="22" font-weight="700" fill="#fff" text-anchor="middle">Midnight Drive</text>
-  <text x="190" y="472" font-size="14" fill="#bbb" text-anchor="middle">Lo-fi Nights</text>
-  <text x="190" y="490" font-size="11" fill="#888" text-anchor="middle">Late Hours · 2024 · 3:42</text>
-
-  <!-- Mood chips -->
-  <g transform="translate(80,506)">
-    <rect width="64" height="24" rx="12" fill="#87CEEB" opacity="0.2" stroke="#87CEEB"/>
-    <circle cx="12" cy="12" r="4" fill="#87CEEB"/>
-    <text x="22" y="16" font-size="11" fill="#87CEEB">Chill</text>
-  </g>
-  <g transform="translate(152,506)">
-    <rect width="64" height="24" rx="12" fill="#4CAF50" opacity="0.2" stroke="#4CAF50"/>
-    <circle cx="12" cy="12" r="4" fill="#4CAF50"/>
-    <text x="22" y="16" font-size="11" fill="#4CAF50">Focus</text>
-  </g>
-  <g transform="translate(224,506)">
-    <rect width="76" height="24" rx="12" fill="#1E5AAF" opacity="0.2" stroke="#1E5AAF"/>
-    <circle cx="12" cy="12" r="4" fill="#1E5AAF"/>
-    <text x="22" y="16" font-size="11" fill="#7FB3FF">Late Night</text>
+  <!-- Corner registration marks -->
+  <g stroke="#444" stroke-width="1" fill="none">
+    <path d="M14,14 L28,14 M14,14 L14,28"/>
+    <path d="M376,14 L362,14 M376,14 L376,28"/>
+    <path d="M14,830 L28,830 M14,830 L14,816"/>
+    <path d="M376,830 L362,830 M376,830 L376,816"/>
   </g>
 
-  <!-- Playback controls -->
-  <g transform="translate(50,560)">
-    <text x="0" y="20" font-size="22" fill="#fff">⏮</text>
-    <text x="60" y="20" font-size="20" fill="#fff">⏪</text>
-    <circle cx="140" cy="14" r="22" fill="#D4AF37"/>
-    <text x="132" y="22" font-size="20" fill="#000">▶</text>
-    <text x="200" y="20" font-size="20" fill="#fff">⏩</text>
-    <text x="260" y="20" font-size="22" fill="#fff">⏭</text>
+  <!-- Status bar (white on black) -->
+  <text x="30" y="32" font-size="14" font-weight="600" fill="#fff">9:41</text>
+  <g transform="translate(310,22)" fill="#fff">
+    <rect x="0" y="2" width="14" height="10" rx="1"/>
+    <rect x="18" y="0" width="3" height="12" rx="0.5"/>
+    <rect x="24" y="2" width="20" height="8" rx="2"/>
   </g>
 
-  <!-- Progress bar -->
-  <rect x="55" y="612" width="270" height="3" rx="1.5" fill="#333"/>
-  <rect x="55" y="612" width="95" height="3" rx="1.5" fill="#D4AF37"/>
-  <text x="55" y="628" font-size="10" fill="#888">1:18</text>
-  <text x="306" y="628" font-size="10" fill="#888">3:42</text>
+  <!-- Top bar -->
+  <text x="30" y="74" font-size="22" fill="#fff">⌄</text>
+  <text x="195" y="74" font-size="10" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="2">TASTE DECK</text>
+  <text x="195" y="90" font-size="11" fill="#888" text-anchor="middle">Card 3 of 47</text>
+  <text x="360" y="74" font-size="20" fill="#fff" text-anchor="end">⋯</text>
 
-  <!-- Gesture hints -->
-  <text x="190" y="678" font-size="10" fill="#666" text-anchor="middle" font-style="italic">Tap to flip • Swipe up to favorite</text>
-  <text x="190" y="694" font-size="10" fill="#666" text-anchor="middle" font-style="italic">Swipe ← prev • Swipe → next • Hold for menu</text>
+  <!-- ================= CARD ================= -->
+  <g filter="url(#cardShadow)">
+    <!-- Irregular TCG card silhouette -->
+    <path d="M48,118
+             L342,118
+             L342,140 L356,154 L356,672 L342,686 L342,756
+             L256,756 L240,768 L150,768 L134,756 L48,756
+             L48,686 L34,672 L34,154 L48,140 Z"
+          fill="#FFFFFF"/>
+  </g>
 
-  <!-- Swipe arrows -->
-  <text x="18" y="384" font-size="24" fill="#D4AF37" opacity="0.4">‹</text>
-  <text x="350" y="384" font-size="24" fill="#D4AF37" opacity="0.4">›</text>
+  <!-- Inner border line -->
+  <path d="M56,126 L334,126 L334,144 L348,158 L348,668 L334,682 L334,748 L254,748 L240,760 L150,760 L136,748 L56,748 L56,682 L42,668 L42,158 L56,144 Z"
+        fill="none" stroke="#000" stroke-width="1" opacity="0.08"/>
 
-  <!-- Bottom Nav -->
-  <rect x="0" y="720" width="380" height="80" fill="#0a0a0a" stroke="#222" stroke-width="1"/>
-  <text x="42" y="755" font-size="22" opacity="0.5">🏠</text>
-  <text x="36" y="775" font-size="10" fill="#666">Home</text>
+  <!-- TITLE STRIP (top banner) -->
+  <g>
+    <path d="M70,140 L320,140 L330,156 L320,172 L70,172 L60,156 Z" fill="#FFFFFF" stroke="#000" stroke-width="1.5"/>
+    <text x="195" y="163" font-size="16" font-weight="900" fill="#000" text-anchor="middle" letter-spacing="3">MIDNIGHT DRIVE</text>
+  </g>
 
-  <text x="128" y="755" font-size="22">🎴</text>
-  <text x="118" y="775" font-size="10" font-weight="700" fill="#D4AF37">Taste Deck</text>
+  <!-- GOLD CREST (wings + hex) -->
+  <g transform="translate(195,118)">
+    <!-- Left wing -->
+    <path d="M-50,20 Q-44,8 -28,4 Q-20,2 -12,8 Q-22,16 -30,22 Q-40,26 -50,20 Z" fill="url(#goldGrad)" stroke="#5a4a14" stroke-width="0.8"/>
+    <!-- Right wing -->
+    <path d="M50,20 Q44,8 28,4 Q20,2 12,8 Q22,16 30,22 Q40,26 50,20 Z" fill="url(#goldGrad)" stroke="#5a4a14" stroke-width="0.8"/>
+    <!-- Center hex -->
+    <polygon points="0,4 11,11 11,23 0,30 -11,23 -11,11" fill="url(#goldGrad)" stroke="#5a4a14" stroke-width="1"/>
+    <polygon points="0,11 6,14 6,21 0,24 -6,21 -6,14" fill="none" stroke="#fff" stroke-width="1"/>
+  </g>
 
-  <text x="218" y="755" font-size="22" opacity="0.5">📚</text>
-  <text x="208" y="775" font-size="10" fill="#666">Library</text>
+  <!-- ALBUM ART WINDOW (holographic) -->
+  <g clip-path="url(#cardClip)">
+    <rect x="48" y="186" width="294" height="380" fill="url(#holo)"/>
+    <!-- holographic noise lines -->
+    <g opacity="0.35" stroke="#fff" stroke-width="0.5">
+      <line x1="48" y1="220" x2="342" y2="200"/>
+      <line x1="48" y1="260" x2="342" y2="244"/>
+      <line x1="48" y1="300" x2="342" y2="288"/>
+      <line x1="48" y1="340" x2="342" y2="328"/>
+      <line x1="48" y1="380" x2="342" y2="372"/>
+      <line x1="48" y1="420" x2="342" y2="416"/>
+      <line x1="48" y1="460" x2="342" y2="460"/>
+      <line x1="48" y1="500" x2="342" y2="504"/>
+    </g>
+    <!-- Big music symbol as "character" placeholder -->
+    <text x="195" y="430" font-size="200" fill="#fff" opacity="0.55" text-anchor="middle" font-weight="200">♪</text>
+    <!-- Diagonal holographic streak -->
+    <polygon points="60,400 120,180 180,180 100,560 60,560" fill="#fff" opacity="0.12"/>
+    <polygon points="220,180 280,180 240,560 200,560" fill="#000" opacity="0.08"/>
+    <rect x="48" y="186" width="294" height="380" fill="url(#holoOverlay)"/>
+  </g>
 
-  <text x="310" y="755" font-size="22" opacity="0.5">👤</text>
-  <text x="304" y="775" font-size="10" fill="#666">Profile</text>
+  <!-- COST / TRACK NUMBER pill (right side, like the "5") -->
+  <g>
+    <rect x="306" y="208" width="34" height="56" rx="17" fill="#000" stroke="#fff" stroke-width="1.5"/>
+    <polygon points="323,222 327,232 337,232 329,238 332,248 323,242 314,248 317,238 309,232 319,232" fill="#D4AF37"/>
+    <text x="323" y="258" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">3</text>
+  </g>
+
+  <!-- LEFT SIDE TAB (barcode + serial) -->
+  <g>
+    <path d="M56,580 L120,580 L120,640 L100,640 L100,660 L56,660 Z" fill="#FFFFFF" stroke="#000" stroke-width="1.2"/>
+    <!-- barcode -->
+    <g fill="#000">
+      <rect x="62" y="588" width="2" height="18"/>
+      <rect x="66" y="588" width="1" height="18"/>
+      <rect x="69" y="588" width="3" height="18"/>
+      <rect x="74" y="588" width="1" height="18"/>
+      <rect x="77" y="588" width="2" height="18"/>
+      <rect x="81" y="588" width="1" height="18"/>
+      <rect x="84" y="588" width="3" height="18"/>
+      <rect x="89" y="588" width="2" height="18"/>
+      <rect x="93" y="588" width="1" height="18"/>
+      <rect x="96" y="588" width="2" height="18"/>
+      <rect x="100" y="588" width="3" height="18"/>
+      <rect x="105" y="588" width="1" height="18"/>
+      <rect x="108" y="588" width="2" height="18"/>
+    </g>
+    <text x="115" y="596" font-size="6" fill="#000" text-anchor="end">No. 0003</text>
+    <!-- vertical name -->
+    <text x="80" y="654" font-size="9" font-weight="700" fill="#000" transform="rotate(-90 80,654)">MIDNIGHT</text>
+  </g>
+
+  <!-- ARTIST CIRCLE BADGE (lower-mid-left) -->
+  <g>
+    <circle cx="160" cy="618" r="40" fill="#FFFFFF" stroke="#000" stroke-width="1.5"/>
+    <circle cx="160" cy="618" r="26" fill="#000"/>
+    <text x="160" y="624" font-size="20" fill="#D4AF37" text-anchor="middle" font-weight="700">♪</text>
+    <!-- arc text top -->
+    <path id="arcTop" d="M126,618 A34,34 0 0 1 194,618" fill="none"/>
+    <text font-size="9" font-weight="700" fill="#000" letter-spacing="2">
+      <textPath href="#arcTop" startOffset="50%" text-anchor="middle">LO-FI NIGHTS</textPath>
+    </text>
+    <!-- arc text bottom -->
+    <path id="arcBot" d="M122,618 A38,38 0 0 0 198,618" fill="none"/>
+    <text font-size="8" font-weight="600" fill="#000" letter-spacing="1.5">
+      <textPath href="#arcBot" startOffset="50%" text-anchor="middle">Artist</textPath>
+    </text>
+  </g>
+
+  <!-- MOOD STRIP ("1 PER TURN" equivalent) -->
+  <g transform="translate(214,584)">
+    <rect width="120" height="20" rx="2" fill="#000"/>
+    <text x="60" y="14" font-size="10" font-weight="800" fill="#fff" text-anchor="middle" letter-spacing="1.5">CHILL · FOCUS</text>
+  </g>
+
+  <!-- DESCRIPTION TEXT BLOCK (where ability text would be) -->
+  <g transform="translate(214,612)">
+    <text x="0" y="0" font-size="10" font-weight="600" fill="#000">Synced lyrics available.</text>
+    <text x="0" y="14" font-size="9" fill="#333">Tap card to flip and read along.</text>
+    <text x="0" y="28" font-size="9" fill="#333">Hold for actions. Swipe up to favorite.</text>
+    <text x="120" y="44" font-size="7" fill="#888" text-anchor="end">No. 0003</text>
+  </g>
+
+  <!-- BOTTOM STAT PILLS -->
+  <!-- Left stat: duration -->
+  <g transform="translate(70,694)">
+    <rect width="110" height="40" rx="6" fill="#000"/>
+    <text x="14" y="26" font-size="14" fill="#D4AF37">⏱</text>
+    <text x="76" y="27" font-size="16" font-weight="800" fill="#fff" text-anchor="end">3:42</text>
+  </g>
+  <!-- Right stat: plays -->
+  <g transform="translate(210,694)">
+    <rect width="110" height="40" rx="6" fill="#000"/>
+    <text x="20" y="27" font-size="16" font-weight="800" fill="#fff">87</text>
+    <text x="50" y="26" font-size="11" fill="#bbb">plays</text>
+    <polygon points="96,16 96,30 104,23" fill="#D4AF37"/>
+  </g>
+
+  <!-- LRC + Heart corner badges -->
+  <g>
+    <rect x="280" y="194" width="42" height="20" rx="10" fill="#000"/>
+    <text x="301" y="208" font-size="9" font-weight="800" fill="#D4AF37" text-anchor="middle">LRC ✓</text>
+  </g>
+  <circle cx="74" cy="204" r="14" fill="#000"/>
+  <text x="74" y="210" font-size="14" fill="#EC407A" text-anchor="middle">♥</text>
+
+  <!-- ============== CONTROL BAR BELOW CARD ============== -->
+  <g transform="translate(0,786)">
+    <!-- prev -->
+    <g transform="translate(80,4)" fill="#fff">
+      <polygon points="14,0 14,20 0,10"/>
+      <rect x="14" y="0" width="3" height="20"/>
+    </g>
+    <!-- play -->
+    <circle cx="195" cy="14" r="22" fill="#D4AF37"/>
+    <polygon points="189,4 189,24 207,14" fill="#000"/>
+    <!-- next -->
+    <g transform="translate(282,4)" fill="#fff">
+      <polygon points="0,0 0,20 14,10"/>
+      <rect x="14" y="0" width="3" height="20"/>
+    </g>
+  </g>
+
+  <text x="195" y="828" font-size="9" fill="#666" text-anchor="middle" font-style="italic">Tap to flip · Swipe ← prev · Swipe → next · Swipe ↓ to exit</text>
 </svg>
