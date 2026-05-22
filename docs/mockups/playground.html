@@ -10,8 +10,8 @@
     --accent: #D4AF37;
     --bg: #0a0a0a;
     --grid: #3a3a3a;
-    --card-w: 320px;
-    --card-h: 560px;
+    --card-w: 350px;
+    --card-h: 720px;
     --crest-scale: 1;
     --art-hue: 0deg;
     --art-sat: 1;
@@ -595,10 +595,10 @@
     <div class="group">
       <h3>PROPORTIONS</h3>
       <label class="row"><span>Card width</span>
-        <input type="range" id="cardw" min="260" max="380" value="320"/>
+        <input type="range" id="cardw" min="260" max="380" value="350"/>
       </label>
       <label class="row"><span>Card height</span>
-        <input type="range" id="cardh" min="460" max="700" value="560"/>
+        <input type="range" id="cardh" min="460" max="760" value="720"/>
       </label>
       <label class="row"><span>Crest size</span>
         <input type="range" id="crest" min="0.6" max="1.6" step="0.05" value="1"/>
@@ -677,7 +677,7 @@
         <span class="draggable" data-key="topMenu" style="font-size:18px;font-weight:400;">⋯</span>
       </div>
       <div class="phone-screen">
-        <div class="card" id="card">
+        <div class="card draggable" data-key="card" id="card">
 
       <!-- Card silhouette (SVG) -->
       <svg class="card-svg" viewBox="0 0 320 560" preserveAspectRatio="none">
